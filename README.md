@@ -196,6 +196,7 @@ docs/
 ## Autores
 
 **Equipo del proyecto Delivery Local**
+
 Itzel Arleth Padilla Segura
 Armando Rodrigo Hernandez Barba 
 Cesar Medina Hernandez
