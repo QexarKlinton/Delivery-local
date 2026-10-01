@@ -1,14 +1,14 @@
-# 🚚 Delivery Local
+# Delivery Local
 
 Plataforma de delivery local orientada al entorno universitario de **CUTlaquepaque**, diseñada para facilitar la compra, gestión y entrega de alimentos sin que el usuario tenga que desplazarse fuera de sus actividades.
 
 > **Estado del repositorio:** documentación y base arquitectónica inicial. La implementación funcional se incorporará conforme avance el desarrollo.
 
-## 🎯 Problema
+##  Problema
 
 Dentro del entorno universitario, estudiantes, docentes y personal pueden perder tiempo al desplazarse para conseguir alimentos. La propuesta de Delivery Local centraliza la oferta de comida y el proceso de pedido en una sola plataforma.
 
-## 💡 Solución
+##  Solución
 
 El sistema contempla un flujo de:
 
@@ -28,7 +28,7 @@ Entrega dentro del área definida
 
 El alcance inicial está pensado para **CUTlaquepaque y sus alrededores**, manteniendo el proyecto acotado a un contexto universitario.
 
-## ✨ Funcionalidades previstas
+##  Funcionalidades previstas
 
 ### Cliente
 - Registro e inicio de sesión.
@@ -54,7 +54,7 @@ El alcance inicial está pensado para **CUTlaquepaque y sus alrededores**, mante
 - Actualización del estado del pedido.
 - Confirmación de entrega.
 
-## 🖼️ Visuales
+##  Visuales
 
 La actividad solicita evidencias visuales del proyecto. Como el repositorio se encuentra en una etapa inicial y todavía no contiene una interfaz funcional publicada, **no se incluyen capturas ficticias**.
 
@@ -107,7 +107,7 @@ MySQL
 
 Esto permite concentrar validaciones, autenticación, autorización y reglas de negocio en el backend.
 
-## 🏗️ Arquitectura
+##  Arquitectura
 
 Se propone una arquitectura de tres capas:
 
@@ -117,7 +117,7 @@ Se propone una arquitectura de tres capas:
 
 La separación busca reducir el acoplamiento y facilitar el mantenimiento del proyecto.
 
-## 📋 Requisitos previos
+##  Requisitos previos
 
 Para la futura ejecución local se contempla:
 
@@ -128,7 +128,7 @@ Para la futura ejecución local se contempla:
 
 > Los comandos definitivos de instalación se actualizarán cuando el código ejecutable esté incorporado al repositorio.
 
-## ⚙️ Instalación
+##  Instalación
 
 Actualmente el repositorio contiene la documentación base. La estructura prevista para el desarrollo es:
 
@@ -147,7 +147,7 @@ Delivery-local/
 
 Cuando se agreguen los módulos ejecutables, esta sección contendrá comandos reproducibles de instalación, configuración de variables de entorno y carga de la base de datos.
 
-## 🧠 Decisiones arquitectónicas
+## Decisiones arquitectónicas
 
 Las decisiones importantes se mantienen como ADRs para conservar memoria técnica del proyecto.
 
@@ -155,7 +155,7 @@ Las decisiones importantes se mantienen como ADRs para conservar memoria técnic
 - [ADR-002: API REST entre frontend y backend](docs/adr/ADR-002-api-rest.md)
 - [ADR-003: MySQL como sistema gestor de base de datos](docs/adr/ADR-003-mysql.md)
 
-## ⚠️ Deuda técnica
+## Deuda técnica
 
 Las deudas conocidas se registran y priorizan en:
 
@@ -163,7 +163,7 @@ Las deudas conocidas se registran y priorizan en:
 
 La deuda no se considera un fallo oculto: se documenta con impacto, prioridad y una propuesta concreta de resolución.
 
-## 🤝 Contribución
+## Contribución
 
 El proyecto utiliza ramas de trabajo y Pull Requests para integrar cambios.
 
@@ -181,7 +181,7 @@ commits atómicos
 
 Consulta [CONTRIBUTING.md](CONTRIBUTING.md) para las convenciones de ramas, commits y Pull Requests.
 
-## 📦 Estructura de documentación
+## Estructura de documentación
 
 ```text
 docs/
@@ -193,12 +193,12 @@ docs/
 └── images/
 ```
 
-## 👥 Autores
+## Autores
 
 **Equipo del proyecto Delivery Local**
 
 Proyecto académico de Ingeniería en Informática — Universidad de Guadalajara, CUTlaquepaque.
 
-## 📄 Nota académica
+## Nota académica
 
 Este repositorio forma parte de un proyecto escolar. Las decisiones, costos, infraestructura y funcionalidades que todavía no estén implementadas se identifican como propuestas o pendientes, evitando presentarlas como características ya disponibles.
