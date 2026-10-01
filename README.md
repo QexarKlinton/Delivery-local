@@ -81,7 +81,7 @@ flowchart TB
     C --> H[Gestión de entregas]
 ```
 
-## 🛠️ Tecnologías
+## Tecnologías
 
 La arquitectura propuesta para la primera versión utiliza:
 
