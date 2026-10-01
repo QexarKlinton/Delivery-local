@@ -198,8 +198,8 @@ docs/
 **Equipo del proyecto Delivery Local**
 
 Itzel Arleth Padilla Segura
-Armando Rodrigo Hernandez Barba 
-Cesar Medina Hernandez
+  Armando Rodrigo Hernandez Barba 
+  Cesar Medina Hernandez
 Ramiro Preciado Martinez
 
 Proyecto académico de Ingeniería en Informática — Universidad de Guadalajara, CUTlaquepaque.
