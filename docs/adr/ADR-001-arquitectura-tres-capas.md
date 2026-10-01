@@ -1,7 +1,4 @@
-# ADR-001: Arquitectura de tres capas
-
-- **Estado:** Aceptado
-- **Fecha:** 2026-10-01
+# ADR-001: Arquitectura de tres 
 
 ## Contexto
 
