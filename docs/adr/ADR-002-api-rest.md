@@ -1,8 +1,5 @@
 # ADR-002: Comunicación mediante API REST
 
-- **Estado:** Aceptado
-- **Fecha:** 2026-10-01
-
 ## Contexto
 
 El frontend necesita consultar y modificar información de usuarios, productos y pedidos sin conectarse directamente a la base de datos.
