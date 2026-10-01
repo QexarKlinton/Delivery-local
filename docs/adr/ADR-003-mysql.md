@@ -1,8 +1,5 @@
 # ADR-003: MySQL como sistema gestor de base de datos
 
-- **Estado:** Aceptado
-- **Fecha:** 2026-10-01
-
 ## Contexto
 
 Delivery Local manejará información estructurada y relacionada: usuarios, roles, productos, categorías, pedidos, detalles de pedidos y entregas.
