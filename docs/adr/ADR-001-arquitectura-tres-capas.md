@@ -1,31 +1,29 @@
-# ADR-001: Arquitectura de tres 
+# ADR-001: Arquitectura de tres capas
+
+**Estado:** Aceptado  
+**Fecha de registro:** 29 de octubre de 2026
 
 ## Contexto
 
-Delivery Local necesita separar la interfaz, las reglas de negocio y la persistencia de datos. El proyecto tiene un alcance académico y debe mantenerse comprensible y mantenible.
+Delivery Local necesita una estructura organizada que facilite el desarrollo, mantenimiento y crecimiento de la plataforma de pedidos de alimentos. Es necesario separar la interfaz, las reglas de negocio y la persistencia de datos.
 
 ## Decisión
 
-Utilizar una arquitectura de tres capas:
+Se utilizará una arquitectura de tres capas:
 
-1. Presentación.
-2. Lógica de negocio.
-3. Datos.
-
-## Justificación técnica
-
-La separación reduce el acoplamiento entre la interfaz y la base de datos, permite modificar una capa con menor impacto sobre las demás y facilita las pruebas y el mantenimiento.
-
-## Consecuencias
-
-- La interfaz no accede directamente a MySQL.
-- Las reglas de negocio se concentran en el backend.
-- La estructura requiere mayor organización inicial.
-- El sistema puede evolucionar posteriormente sin cambiar el modelo de capas base.
+1. **Presentación:** React, HTML, CSS y JavaScript para la interfaz del usuario.
+2. **Lógica de negocio:** Node.js y Express para procesar solicitudes mediante una API REST.
+3. **Datos:** MySQL para almacenar usuarios, productos, pedidos y demás información.
 
 ## Alternativas consideradas
 
-- Arquitectura monolítica sin separación explícita.
-- Microservicios.
+- **Aplicación monolítica sin separación clara de responsabilidades:** se descarta porque dificulta mantener límites claros entre la interfaz, la lógica y los datos.
+- **Arquitectura de microservicios:** se descarta para el alcance actual porque añade complejidad operativa e infraestructura sin una necesidad técnica demostrada.
 
-Para el alcance actual, los microservicios añadirían complejidad operativa sin una necesidad técnica demostrada.
+## Consecuencias
+
+- La interfaz no accederá directamente a MySQL.
+- Las reglas de negocio se concentrarán en el backend.
+- La separación facilita las pruebas, el mantenimiento y las futuras mejoras.
+- Será necesario configurar correctamente la comunicación entre el frontend, la API y la base de datos.
+- La estructura requiere mayor organización inicial, pero permite que las capas evolucionen con menor impacto entre sí.
