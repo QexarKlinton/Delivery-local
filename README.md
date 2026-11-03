@@ -231,4 +231,6 @@ Cesar Medina Hernandez
 
 Ramiro Preciado Martinez
 
+Daniel Alejandro Medina Mena
+
 Proyecto académico de Ingeniería en Informática — Universidad de Guadalajara, CUTlaquepaque.
