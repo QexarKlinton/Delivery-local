@@ -4,11 +4,11 @@ Plataforma de delivery local orientada al entorno universitario de **CUTlaquepaq
 
 > **Estado del repositorio:** documentación y base arquitectónica inicial. La implementación funcional se incorporará conforme avance el desarrollo.
 
-##  Problema
+## Problema
 
 Dentro del entorno universitario, estudiantes, docentes y personal pueden perder tiempo al desplazarse para conseguir alimentos. La propuesta de Delivery Local centraliza la oferta de comida y el proceso de pedido en una sola plataforma.
 
-##  Solución
+## Solución
 
 El sistema contempla un flujo de:
 
@@ -28,7 +28,7 @@ Entrega dentro del área definida
 
 El alcance inicial está pensado para **CUTlaquepaque y sus alrededores**, manteniendo el proyecto acotado a un contexto universitario.
 
-##  Funcionalidades previstas
+## Funcionalidades previstas
 
 ### Cliente
 - Registro e inicio de sesión.
@@ -54,7 +54,7 @@ El alcance inicial está pensado para **CUTlaquepaque y sus alrededores**, mante
 - Actualización del estado del pedido.
 - Confirmación de entrega.
 
-##  Visuales
+## Visuales
 
 La actividad solicita evidencias visuales del proyecto. Como el repositorio se encuentra en una etapa inicial y todavía no contiene una interfaz funcional publicada, **no se incluyen capturas ficticias**.
 
@@ -107,7 +107,7 @@ MySQL
 
 Esto permite concentrar validaciones, autenticación, autorización y reglas de negocio en el backend.
 
-##  Arquitectura
+## Arquitectura
 
 Se propone una arquitectura de tres capas:
 
@@ -117,7 +117,7 @@ Se propone una arquitectura de tres capas:
 
 La separación busca reducir el acoplamiento y facilitar el mantenimiento del proyecto.
 
-##  Requisitos previos
+## Requisitos previos
 
 Para la futura ejecución local se contempla:
 
@@ -128,7 +128,7 @@ Para la futura ejecución local se contempla:
 
 > Los comandos definitivos de instalación se actualizarán cuando el código ejecutable esté incorporado al repositorio.
 
-##  Instalación
+## Instalación
 
 Actualmente el repositorio contiene la documentación base. La estructura prevista para el desarrollo es:
 
@@ -139,6 +139,9 @@ Delivery-local/
 ├── database/
 ├── docs/
 │   ├── adr/
+│   ├── blockers.md
+│   ├── test-cases.md
+│   ├── technical-debt.md
 │   ├── architecture/
 │   └── images/
 ├── README.md
@@ -154,6 +157,26 @@ Las decisiones importantes se mantienen como ADRs para conservar memoria técnic
 - [ADR-001: Arquitectura de tres capas](docs/adr/ADR-001-arquitectura-tres-capas.md)
 - [ADR-002: API REST entre frontend y backend](docs/adr/ADR-002-api-rest.md)
 - [ADR-003: MySQL como sistema gestor de base de datos](docs/adr/ADR-003-mysql.md)
+
+## Bloqueos del proyecto
+
+Los bloqueos del equipo se encuentran registrados en un documento específico y también se muestran aquí para que sean fáciles de localizar.
+
+- [BLQ-001: Infraestructura](docs/blockers.md#blq-001-infraestructura)
+- [BLQ-002: Conocimiento y experiencia en desarrollo](docs/blockers.md#blq-002-conocimiento-y-experiencia-en-desarrollo)
+
+**[Consultar todos los bloqueos del proyecto](docs/blockers.md)**
+
+## Casos de prueba
+
+Los casos de prueba definidos para validar la integración técnica y el flujo de pedido están documentados en:
+
+- [CP-INT-001: Registro de pedido (integración)](docs/test-cases.md#cp-int-001--registro-de-pedido)
+- [CP-ACE-001: Realizar un pedido de comida (aceptación)](docs/test-cases.md#cp-ace-001--realizar-un-pedido-de-comida)
+
+**[Consultar casos de prueba y estado de ejecución](docs/test-cases.md)**
+
+> Los casos están documentados y pendientes de ejecución en la aplicación. Los datos de precio incluidos son ejemplos para las pruebas.
 
 ## Deuda técnica
 
@@ -189,6 +212,9 @@ docs/
 │   ├── ADR-001-arquitectura-tres-capas.md
 │   ├── ADR-002-api-rest.md
 │   └── ADR-003-mysql.md
+├── blockers.md
+├── test-cases.md
+├── technical-debt.md
 ├── architecture/
 └── images/
 ```
@@ -199,8 +225,8 @@ docs/
 
 Itzel Arleth Padilla Segura
 
-Armando Rodrigo Hernandez Barba 
-  
+Armando Rodrigo Hernandez Barba
+
 Cesar Medina Hernandez
 
 Ramiro Preciado Martinez
