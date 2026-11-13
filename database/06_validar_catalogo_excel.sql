@@ -7,7 +7,8 @@ SELECT COUNT(*) AS negocios_importados FROM negocios WHERE fila_fuente IS NOT NU
 SELECT COUNT(*) AS productos_importados FROM productos WHERE fila_excel IS NOT NULL;
 SELECT COUNT(*) AS categorias FROM categorias;
 SELECT COUNT(*) AS variantes FROM producto_variantes;
-SELECT COUNT(*) AS puntos_entrega FROM puntos_entrega WHERE fila_excel IS NOT NULL;
+SELECT COUNT(*) AS puntos_entrega_cutlaquepaque FROM puntos_entrega WHERE activo=TRUE;
+SELECT tipo,COUNT(*) AS cantidad FROM puntos_entrega WHERE activo=TRUE GROUP BY tipo;
 
 SELECT n.nombre AS negocio, COUNT(p.id_producto) AS productos
 FROM negocios n
