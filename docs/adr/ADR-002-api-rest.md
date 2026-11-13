@@ -10,7 +10,7 @@ El frontend necesita consultar y modificar información de usuarios, productos y
 
 Utilizar una API REST implementada con Node.js y Express, intercambiando información mediante HTTP y JSON.
 
-## Justificación técnica
+## Justificación
 
 La API permite centralizar autenticación, autorización, validación y reglas de negocio. También establece un contrato claro entre frontend y backend.
 
