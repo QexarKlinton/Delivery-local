@@ -61,14 +61,27 @@ app.get('/api/roles', async (req, res, next) => {
   }
 });
 
-// Lista los negocios activos.
+// Lista negocios activos e incluye los datos de su responsable.
 app.get('/api/negocios', async (req, res, next) => {
   try {
     const [negocios] = await pool.query(
-      `SELECT id_negocio, nombre, descripcion, categoria, direccion, telefono
-       FROM negocios
-       WHERE activo = TRUE
-       ORDER BY nombre`
+      `SELECT
+         n.id_negocio,
+         n.nombre,
+         n.descripcion,
+         n.categoria,
+         n.direccion,
+         n.telefono,
+         n.horario_atencion,
+         n.observaciones,
+         n.logo_url,
+         v.id_vendedor,
+         v.nombre AS responsable,
+         v.correo AS correo_contacto
+       FROM negocios n
+       LEFT JOIN vendedores v ON v.id_vendedor = n.id_vendedor
+       WHERE n.activo = TRUE
+       ORDER BY n.nombre`
     );
 
     res.json(negocios);
@@ -77,24 +90,55 @@ app.get('/api/negocios', async (req, res, next) => {
   }
 });
 
-// Lista productos disponibles. Puede filtrarse por id_negocio.
+// Lista puntos de entrega activos de un negocio.
+app.get('/api/negocios/:idNegocio/puntos-entrega', async (req, res, next) => {
+  try {
+    const idNegocio = Number(req.params.idNegocio);
+
+    if (!Number.isInteger(idNegocio) || idNegocio <= 0) {
+      return res.status(400).json({
+        error: 'id_negocio debe ser un entero positivo.'
+      });
+    }
+
+    const [puntos] = await pool.query(
+      `SELECT id_punto_entrega, id_negocio, nombre, ubicacion_referencia,
+              descripcion, disponibilidad_texto
+       FROM puntos_entrega
+       WHERE id_negocio = ? AND activo = TRUE
+       ORDER BY orden_fuente, id_punto_entrega`,
+      [idNegocio]
+    );
+
+    res.json(puntos);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Lista productos disponibles, con su categoría y datos del catálogo.
 app.get('/api/productos', async (req, res, next) => {
   try {
     const { id_negocio: idNegocio } = req.query;
 
     let sql = `SELECT
-                  p.id_producto,
-                  p.id_negocio,
-                  n.nombre AS nombre_negocio,
-                  p.nombre,
-                  p.descripcion,
-                  p.precio,
-                  p.disponible
-                FROM productos p
-                INNER JOIN negocios n
-                  ON n.id_negocio = p.id_negocio
-                WHERE p.disponible = TRUE
-                  AND n.activo = TRUE`;
+                 p.id_producto,
+                 p.id_negocio,
+                 n.nombre AS nombre_negocio,
+                 p.id_categoria,
+                 c.nombre AS categoria,
+                 p.nombre,
+                 p.descripcion,
+                 p.precio,
+                 p.disponible,
+                 p.disponibilidad_texto,
+                 p.existencias_aproximadas,
+                 p.existencias_texto,
+                 p.tiempo_preparacion_texto
+               FROM productos p
+               INNER JOIN negocios n ON n.id_negocio = p.id_negocio
+               LEFT JOIN categorias c ON c.id_categoria = p.id_categoria
+               WHERE p.disponible = TRUE AND n.activo = TRUE`;
     const params = [];
 
     if (idNegocio !== undefined) {
@@ -110,10 +154,35 @@ app.get('/api/productos', async (req, res, next) => {
       params.push(parsedId);
     }
 
-    sql += ' ORDER BY n.nombre, p.nombre';
+    sql += ' ORDER BY n.nombre, p.nombre, p.id_producto';
 
     const [productos] = await pool.query(sql, params);
     res.json(productos);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Lista las variantes estructuradas de un producto.
+app.get('/api/productos/:idProducto/variantes', async (req, res, next) => {
+  try {
+    const idProducto = Number(req.params.idProducto);
+
+    if (!Number.isInteger(idProducto) || idProducto <= 0) {
+      return res.status(400).json({
+        error: 'id_producto debe ser un entero positivo.'
+      });
+    }
+
+    const [variantes] = await pool.query(
+      `SELECT id_variante, id_producto, nombre, precio
+       FROM producto_variantes
+       WHERE id_producto = ? AND disponible = TRUE
+       ORDER BY id_variante`,
+      [idProducto]
+    );
+
+    res.json(variantes);
   } catch (error) {
     next(error);
   }
