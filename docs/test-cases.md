@@ -435,9 +435,9 @@ La prueba se debe ejecutar de manera aislada, sin necesidad de conectarse a la b
 
 **Datos de prueba:**
 
-Producto Precio unitario Cantidad Subtotal
-Taco de bistec $20.00 2 $40.00
-Agua de horchata $25.00 1 $25.00
+Producto | Precio unitario | Cantidad | Subtotal
+Taco de bistec | $20.00 |2 | $40.00
+Agua de horchata | $25.00 | 1 | $25.00
 Total esperado $65.00
 
 **Procedimiento:**
@@ -490,10 +490,10 @@ La prueba debe ejecutarse de manera aislada, sin enviar información al backend 
 
 **Datos de prueba:**
 
-Campo Valor ingresado
-Nombre (Vacío)
-Correo electrónico estudiante2@cutlaquepaque.edu.mx
-Contraseña Clave12345
+Campo | Valor | ingresado
+Nombre | (Vacío)
+Correo electrónico | estudiante2@cutlaquepaque.edu.mx
+Contraseña | Clave12345
 
 **Procedimiento:**
 
@@ -610,12 +610,12 @@ Los productos disponibles deben estar marcados como disponibles.
 
 **Datos de prueba:**
 
-Negocio Producto de ejemplo Precio
-Tamales Mary Tamal verde $18.00
-Tacos Beny Taco de bistec $20.00
-Fonda de Lety Comida del día $75.00
-Lonches Mario Lonche de pierna $55.00
-Aguas Frescas La Michoacana Agua de horchata $25.00
+Negocio | Producto de ejemplo | Precio
+Tamales Mary | Tamal verde | $18.00
+Tacos Beny | Taco de bistec | $20.00
+Fonda de Lety | Comida del día | $75.00
+Lonches Mario | Lonche de pierna | $55.00
+Aguas Frescas La Michoacana | Agua de horchata | $25.00
 
 **Procedimiento:**
 
