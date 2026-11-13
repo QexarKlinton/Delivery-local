@@ -39,7 +39,7 @@ Este documento registra los bloqueos que afectan el avance del proyecto, sus cau
 * **Intentos previos:** Elaboración de borradores del diagrama entidad-relación (DER) y pruebas de conexión local aisladas.
 * **Solución / Acción propuesta:** Estandarizar el diccionario de datos asegurando que los nombres de tablas y campos coincidan exactamente entre el script SQL y los modelos del backend, centralizar las migraciones en el repositorio y configurar un `.env.example` con las credenciales de conexión.
 * **Responsable:** Equipo de desarrollo (área de Backend / Datos).
-* **Fecha:** 13/11/2026.
+* **Fecha:** 10/11/2026.
 
 ---
 
@@ -52,7 +52,7 @@ Este documento registra los bloqueos que afectan el avance del proyecto, sus cau
 * **Intentos previos:** Implementación de validaciones básicas nativas de HTML5 y pruebas manuales de captura.
 * **Solución / Acción propuesta:** Estandarizar los esquemas de validación en cliente y servidor, mostrar mensajes de error claros por campo en la interfaz y asegurar que el backend valide cada petición antes de procesarla.
 * **Responsable:** Equipo de desarrollo (Frontend y Backend).
-* **Fecha:** 13/11/2026.
+* **Fecha:** 10/11/2026.
 
 ---
 
@@ -65,7 +65,7 @@ Este documento registra los bloqueos que afectan el avance del proyecto, sus cau
 * **Intentos previos:** Pruebas individuales de rutas mediante clientes HTTP y renderizado de vistas con datos estáticos.
 * **Solución / Acción propuesta:** Incorporar el componente/botón de **agregar al carrito** en el catálogo, corregir los manejadores de eventos (`onClick`/`onSubmit`) en inicio de sesión y carrito, alinear los nombres de propiedades JSON entre backend y frontend, y habilitar correctamente CORS en el servidor.
 * **Responsable:** Todo el equipo de desarrollo.
-* **Fecha:** 13/11/2026.
+* **Fecha:** 10/11/2026.
 
 ---
 
@@ -78,7 +78,7 @@ Este documento registra los bloqueos que afectan el avance del proyecto, sus cau
 * **Intentos previos:** Subida directa de archivos y resolución manual de conflictos sin una guía de comandos estándar.
 * **Solución / Acción propuesta:** Adoptar un flujo basado en ramas por funcionalidad (`feature/nombre-tarea`), prohibir los *push* directos a `main`, exigir *Pull Requests* con revisión rápida antes de fusionar y establecer la regla de ejecutar `git pull` antes de iniciar cualquier sesión de trabajo.
 * **Responsable:** Todo el equipo de desarrollo.
-* **Fecha:** 13/11/2026.
+* **Fecha:** 10/11/2026.
 
 ---
 
