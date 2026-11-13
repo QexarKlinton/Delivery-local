@@ -1,7 +1,7 @@
 -- =====================================================
 -- CATALOGO REAL DE DELIVERY LOCAL - IMPORTADO DE EXCEL
 -- Fuente: menu_completoo.xlsx | Hoja1 | filas 2 a 74
--- 6 negocios, 73 productos, 17 categorias, 37 variantes, 9 puntos
+-- 6 negocios, 73 productos, 17 categorias, 37 variantes y 21 puntos institucionales
 -- Reejecutable: identifica registros por nombre/fila de origen.
 -- =====================================================
 USE cutlaquepaque_delivery;
@@ -185,53 +185,31 @@ SELECT p.id_producto,x.nombre,x.precio FROM (
 ) AS x INNER JOIN productos p ON p.fila_excel=x.fila_excel
 WHERE NOT EXISTS (SELECT 1 FROM producto_variantes pv WHERE pv.id_producto=p.id_producto AND pv.nombre=x.nombre);
 
--- PUNTOS DE ENTREGA
-INSERT INTO puntos_entrega (id_negocio,nombre,ubicacion_referencia,descripcion,disponibilidad_texto,datos_fuente,fila_excel,orden_fuente,activo)
-SELECT n.id_negocio,x.nombre,x.ubicacion,x.descripcion,x.disponibilidad,x.datos_fuente,x.fila_excel,x.orden,TRUE
-FROM (
-  SELECT 'La Esquina del Sazón' AS negocio, 'ENTRADA PRINCIPAL' AS nombre, 'Junto a la caseta de vigilancia principal' AS ubicacion, 'En las bancas que están justo frente a los torniquetes de acceso peatonal.' AS descripcion, 'Lunes a Sábado (Mismo horario del negocio).' AS disponibilidad, 'Nombre: ENTRADA PRINCIPAL
-Ubicación: Junto a la caseta de vigilancia principal
-Descripción: En las bancas que están justo frente a los torniquetes de acceso peatonal.
-Disponibilidad: Lunes a Sábado (Mismo horario del negocio).' AS datos_fuente, 2 AS fila_excel, 1 AS orden
-  UNION ALL SELECT 'Mariscos Lalo''S 1.' AS negocio, 'Sucursal Principal Mariscos Lalo''s 1' AS nombre, 'C. Juan de la Barrera 5371, El Campesino, 45597 San Pedro Tlaquepaque, Jal.' AS ubicacion, 'Local físico para entrega en barra o mostrador.' AS descripcion, 'De miércoles a lunes de 9:00 AM a 6:00 PM (martes cerrado).' AS disponibilidad, 'Nombre: Sucursal Principal Mariscos Lalo''s 1
-Ubicación: C. Juan de la Barrera 5371, El Campesino, 45597 San Pedro Tlaquepaque, Jal.
-Descripción: Local físico para entrega en barra o mostrador.
-Disponibilidad: De miércoles a lunes de 9:00 AM a 6:00 PM (martes cerrado).' AS datos_fuente, 17 AS fila_excel, 1 AS orden
-  UNION ALL SELECT 'Mariscos Lalo''S 1.' AS negocio, 'Plaza Centro Tlaquepaque' AS nombre, 'Kiosco central de San Pedro Tlaquepaque.' AS ubicacion, 'Punto al aire libre en zona turística para entregas rápidas.' AS descripcion, 'Sábados y domingos de 1:00 PM a 4:00 PM.' AS disponibilidad, 'Nombre: Plaza Centro Tlaquepaque
-Ubicación: Kiosco central de San Pedro Tlaquepaque.
-Descripción: Punto al aire libre en zona turística para entregas rápidas.
-Disponibilidad: Sábados y domingos de 1:00 PM a 4:00 PM.' AS datos_fuente, 17 AS fila_excel, 2 AS orden
-  UNION ALL SELECT 'Mariscos Lalo''S 1.' AS negocio, 'Parque El Campesino' AS nombre, 'Explanada principal del Parque El Campesino, a unas calles del local.' AS ubicacion, 'Área verde accesible para recolección en vehículo o a pie.' AS descripcion, 'Jueves y viernes de 2:00 PM a 5:00 PM.' AS disponibilidad, 'Nombre: Parque El Campesino
-Ubicación: Explanada principal del Parque El Campesino, a unas calles del local.
-Descripción: Área verde accesible para recolección en vehículo o a pie.
-Disponibilidad: Jueves y viernes de 2:00 PM a 5:00 PM.' AS datos_fuente, 17 AS fila_excel, 3 AS orden
-  UNION ALL SELECT 'Makito sushi.' AS negocio, 'Punto de entrega (nombre no especificado en Excel)' AS nombre, 'Punto al aire libre para recolección rápida desde automovil' AS ubicacion, 'Local físico dentro del centro comercial Plaza Azteca para entrega en barra o mostrador.
-Pluma de acceso principal al estacionamiento de la plaza' AS descripcion, 'De martes a sábado de 1:00 PM a 9:30 PM y domingos de 1:00 PM a 7:30 PM.
-   * Viernes a domingo de 2:00 PM a 6:00 PM 
-   * Sábados de 3:00 PM a 7:00 PM' AS disponibilidad, 'Nombre: Local físico dentro del centro comercial Plaza Azteca para entrega en barra o mostrador.
-Ubicación: Punto al aire libre para recolección rápida desde automovil
-Descripción: Pluma de acceso principal al estacionamiento de la plaza
-Disponibilidad: De martes a sábado de 1:00 PM a 9:30 PM y domingos de 1:00 PM a 7:30 PM.
-   * Viernes a domingo de 2:00 PM a 6:00 PM 
-   * Sábados de 3:00 PM a 7:00 PM' AS datos_fuente, 35 AS fila_excel, 1 AS orden
-  UNION ALL SELECT 'MERAKI RESTAURANT PIZZERIA' AS negocio, 'Sucursal Meraki Restaurant Pizzeria' AS nombre, 'San Francisco 20-oriente, Nueva Santa María, 45530 San Pedro Tlaquepaque, Jal.' AS ubicacion, 'Local físico del restaurante para entrega directa en mostrador o comedor.' AS descripcion, 'De jueves a martes de 4:00 PM a 11:00 PM / 12:00 AM (miércoles cerrado).' AS disponibilidad, 'Nombre: Sucursal Meraki Restaurant Pizzeria
-Ubicación: San Francisco 20-oriente, Nueva Santa María, 45530 San Pedro Tlaquepaque, Jal.
-Descripción: Local físico del restaurante para entrega directa en mostrador o comedor.
-Disponibilidad: De jueves a martes de 4:00 PM a 11:00 PM / 12:00 AM (miércoles cerrado).' AS datos_fuente, 46 AS fila_excel, 1 AS orden
-  UNION ALL SELECT 'MERAKI RESTAURANT PIZZERIA' AS negocio, 'Campo Deportivo Campo Rojos' AS nombre, 'Acceso principal a las canchas deportivas sobre la avenida principal' AS ubicacion, 'Punto al aire libre cerca de la zona recreativa para entregas rápidas' AS descripcion, 'Viernes y sábados de 6:00 PM a 10:00; domingos de 5:00 PM a 9:00' AS disponibilidad, 'Nombre: Campo Deportivo Campo Rojos
-Ubicación: Acceso principal a las canchas deportivas sobre la avenida principal
-Descripción: Punto al aire libre cerca de la zona recreativa para entregas rápidas
-Disponibilidad: Viernes y sábados de 6:00 PM a 10:00; domingos de 5:00 PM a 9:00' AS datos_fuente, 46 AS fila_excel, 2 AS orden
-  UNION ALL SELECT 'Peinecillo''s Gril.' AS negocio, 'Sucursal Peinecillo''s Gril' AS nombre, 'v. Las Terrazas 981B, Las Terrazas, 45599 San Pedro Tlaquepaque, Jal.' AS ubicacion, '* Local o puesto físico para recolección en mostrador.' AS descripcion, '* Lunes a viernes de 6:00 PM a 10:30 PM, sábado y domingo de 2:00 PM a 10:30 PM.' AS disponibilidad, 'Nombre: Sucursal Peinecillo''s Gril
-Ubicación: v. Las Terrazas 981B, Las Terrazas, 45599 San Pedro Tlaquepaque, Jal.
-Descripción: * Local o puesto físico para recolección en mostrador.
-Disponibilidad: * Lunes a viernes de 6:00 PM a 10:30 PM, sábado y domingo de 2:00 PM a 10:30 PM.' AS datos_fuente, 55 AS fila_excel, 1 AS orden
-  UNION ALL SELECT 'Paleteria Dani.' AS negocio, 'Sucursal Paleteria Dani' AS nombre, '' AS ubicacion, 'Mostrador físico del establecimiento para venta al público.' AS descripcion, 'Lunes a sábado de 11:00 AM a 8:00/8:30 PM; domingos de 2:00 PM a 7:00 PM.' AS disponibilidad, 'Nombre: Sucursal Paleteria Dani
-Ubicación: 
-Descripción: Mostrador físico del establecimiento para venta al público.
-Disponibilidad: Lunes a sábado de 11:00 AM a 8:00/8:30 PM; domingos de 2:00 PM a 7:00 PM.' AS datos_fuente, 65 AS fila_excel, 1 AS orden
-) AS x INNER JOIN negocios n ON n.nombre=x.negocio
-WHERE NOT EXISTS (SELECT 1 FROM puntos_entrega pe WHERE pe.id_negocio=n.id_negocio AND pe.fila_excel=x.fila_excel AND pe.orden_fuente=x.orden);
+-- PUNTOS OFICIALES DE ENTREGA DE CUTLAQUEPAQUE
+INSERT INTO puntos_entrega (nombre,tipo,edificio,referencia,descripcion,orden,activo)
+VALUES
+('Aula 1','aula','CUTlaquepaque','Aula 1','Punto de entrega para pedidos dentro del Aula 1.',1,TRUE),
+('Aula 2','aula','CUTlaquepaque','Aula 2','Punto de entrega para pedidos dentro del Aula 2.',2,TRUE),
+('Aula 3','aula','CUTlaquepaque','Aula 3','Punto de entrega para pedidos dentro del Aula 3.',3,TRUE),
+('Aula 4','aula','CUTlaquepaque','Aula 4','Punto de entrega para pedidos dentro del Aula 4.',4,TRUE),
+('Aula 5','aula','CUTlaquepaque','Aula 5','Punto de entrega para pedidos dentro del Aula 5.',5,TRUE),
+('Aula 6','aula','CUTlaquepaque','Aula 6','Punto de entrega para pedidos dentro del Aula 6.',6,TRUE),
+('Aula 7','aula','CUTlaquepaque','Aula 7','Punto de entrega para pedidos dentro del Aula 7.',7,TRUE),
+('Aula 8','aula','CUTlaquepaque','Aula 8','Punto de entrega para pedidos dentro del Aula 8.',8,TRUE),
+('Aula 9','aula','CUTlaquepaque','Aula 9','Punto de entrega para pedidos dentro del Aula 9.',9,TRUE),
+('Aula 10','aula','CUTlaquepaque','Aula 10','Punto de entrega para pedidos dentro del Aula 10.',10,TRUE),
+('Aula 11','aula','CUTlaquepaque','Aula 11','Punto de entrega para pedidos dentro del Aula 11.',11,TRUE),
+('Aula 12','aula','CUTlaquepaque','Aula 12','Punto de entrega para pedidos dentro del Aula 12.',12,TRUE),
+('Aula 13','aula','CUTlaquepaque','Aula 13','Punto de entrega para pedidos dentro del Aula 13.',13,TRUE),
+('Aula 14','aula','CUTlaquepaque','Aula 14','Punto de entrega para pedidos dentro del Aula 14.',14,TRUE),
+('Aula 15','aula','CUTlaquepaque','Aula 15','Punto de entrega para pedidos dentro del Aula 15.',15,TRUE),
+('Aula 16','aula','CUTlaquepaque','Aula 16','Punto de entrega para pedidos dentro del Aula 16.',16,TRUE),
+('Aula 17','aula','CUTlaquepaque','Aula 17','Punto de entrega para pedidos dentro del Aula 17.',17,TRUE),
+('Aula 18','aula','CUTlaquepaque','Aula 18','Punto de entrega para pedidos dentro del Aula 18.',18,TRUE),
+('Aula 19','aula','CUTlaquepaque','Aula 19','Punto de entrega para pedidos dentro del Aula 19.',19,TRUE),
+('Aula 20','aula','CUTlaquepaque','Aula 20','Punto de entrega para pedidos dentro del Aula 20.',20,TRUE),
+('Administración (Edificio CEMSAC)','administracion','CEMSAC','Edificio CEMSAC - Administración','Punto de entrega ubicado en el edificio de Administración (CEMSAC).',21,TRUE)
+ON DUPLICATE KEY UPDATE tipo=VALUES(tipo),edificio=VALUES(edificio),referencia=VALUES(referencia),descripcion=VALUES(descripcion),activo=TRUE;
 
 COMMIT;
 
@@ -240,7 +218,7 @@ SELECT COUNT(*) AS total_negocios_excel FROM negocios WHERE fila_fuente IS NOT N
 SELECT COUNT(*) AS total_productos_excel FROM productos WHERE fila_excel IS NOT NULL;
 SELECT COUNT(*) AS total_categorias FROM categorias;
 SELECT COUNT(*) AS total_variantes_importadas FROM producto_variantes;
-SELECT COUNT(*) AS total_puntos_entrega_excel FROM puntos_entrega WHERE fila_excel IS NOT NULL;
+SELECT COUNT(*) AS total_puntos_entrega_cutlaquepaque FROM puntos_entrega WHERE activo=TRUE;
 SELECT n.nombre AS negocio, COUNT(p.id_producto) AS productos
 FROM negocios n LEFT JOIN productos p ON p.id_negocio=n.id_negocio AND p.fila_excel IS NOT NULL
 WHERE n.fila_fuente IS NOT NULL GROUP BY n.id_negocio,n.nombre ORDER BY n.nombre;
