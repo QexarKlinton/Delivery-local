@@ -1,6 +1,6 @@
 # Delivery Local
 
-Plataforma de delivery local para el entorno universitario de **CUTlaquepaque**, que permite consultar negocios, productos y realizar pedidos con entrega dentro del campus.
+Plataforma de delivery local para el entorno universitario de **CUTlaquepaque**, que permite consultar negocios, productos y realizar pedidos con entrega en los puntos registrados.
 
 ## Tecnologías
 
@@ -12,70 +12,86 @@ Plataforma de delivery local para el entorno universitario de **CUTlaquepaque**,
 | Base de datos | MySQL / MariaDB |
 | Conexión | mysql2 |
 
-## Estructura actual
+## Estructura principal
 
 ```text
 Delivery-local/
 ├── DELIVERY_BACKEND/
-│   ├── src/
-│   │   ├── db.js
-│   │   └── index.js
-│   ├── .env.example
-│   └── package.json
+│   ├── src/db.js
+│   ├── src/index.js
+│   └── .env.example
 ├── database/
+│   ├── 00_importacion_excel.md
 │   ├── 01_schema.sql
 │   ├── 02_datos_iniciales.sql
 │   ├── 03_validar_migracion_pedidos.sql
-│   └── 04_migrar_integridad_pedidos.sql
-├── docs/
+│   ├── 04_migrar_integridad_pedidos.sql
+│   ├── 05_migrar_catalogo_excel.sql
+│   └── 06_validar_catalogo_excel.sql
 ├── frontend/
 └── README.md
 ```
 
-## 1. Preparar la base de datos
+## 1. Catálogo definitivo importado
 
-En MySQL Workbench, la base de datos se llama **cutlaquepaque_delivery**.
+El catálogo de negocios se integró desde `menu_completoo.xlsx` (Hoja1):
 
-**Instalación nueva:**
+- 6 negocios y sus responsables/contactos.
+- 73 productos con descripción, precio, categoría, disponibilidad, existencias, variantes informadas y tiempo de preparación.
+- 17 categorías de producto normalizadas por nombre (se unificaron diferencias de mayúsculas/minúsculas).
+- 37 variantes estructuradas cuando el Excel proporcionó opciones identificables; los textos originales de variantes y precios también se conservan en cada producto.
+- 9 puntos de entrega registrados.
 
-1. Abre y ejecuta `database/01_schema.sql`.
-2. Abre y ejecuta `database/02_datos_iniciales.sql`.
+Se conserva una referencia a la fila de origen del Excel (`fila_fuente` / `fila_excel`). Esto permite que el script sea repetible y conserva incluso los dos registros de “Jarra de Sake 240 ml” que aparecen en filas distintas del Excel.
 
-El segundo archivo registra los cinco negocios y sus 30 productos de ejemplo. Puede ejecutarse más de una vez sin duplicar esos registros.
+Los cinco negocios de ejemplo del catálogo anterior (Tamales Mary, Tacos Beny, Fonda de Lety, Lonches Mario y Aguas Frescas La Michoacana) se desactivan, no se borran, para conservar cualquier historial que pudiera existir.
 
-**Si ya tenías creada la base con la versión anterior del esquema:**
+Las celdas de fotografía/logotipo del Excel contienen `#VALUE!` o están vacías; por eso los campos `imagen_url` y `logo_url` quedan en NULL. Las imágenes no se publican como archivos ni se inventan enlaces. Los correos y teléfonos se conservan como texto fuente, incluso cuando el Excel contiene formatos que requieren confirmación.
 
-1. Ejecuta `database/03_validar_migracion_pedidos.sql`.
-2. Comprueba que `detalles_con_negocio_incorrecto` sea **0** y que la consulta de detalle no devuelva filas.
-3. Solo si la validación es correcta, ejecuta una vez `database/04_migrar_integridad_pedidos.sql`.
+## 2. Preparar la base de datos
 
-No ejecutes el archivo 04 si la validación devuelve inconsistencias. Tampoco necesitas ejecutar la migración en una instalación nueva, porque el esquema actualizado ya incluye esas relaciones.
+La base de datos se llama **cutlaquepaque_delivery**.
 
-Nota: `01_schema.sql` crea tablas si no existen; no altera automáticamente tablas que ya fueron creadas. Para bases anteriores se utiliza la migración indicada arriba.
+### Instalación nueva
 
-## 2. Configurar y ejecutar el backend
+1. Ejecuta `database/01_schema.sql`.
+2. Ejecuta `database/02_datos_iniciales.sql`.
+3. Ejecuta `database/06_validar_catalogo_excel.sql` y revisa los conteos.
 
-Abre una terminal en la carpeta del proyecto y ejecuta:
+### Si ya existe la base anterior del proyecto
+
+1. Si todavía no migraste la integridad de pedidos, ejecuta `database/03_validar_migracion_pedidos.sql`. Solo si `detalles_con_negocio_incorrecto` es 0, ejecuta una vez `database/04_migrar_integridad_pedidos.sql`.
+2. Ejecuta una sola vez `database/05_migrar_catalogo_excel.sql` para agregar las columnas y tablas del catálogo ampliado.
+3. Ejecuta `database/02_datos_iniciales.sql` para importar el catálogo.
+4. Ejecuta `database/06_validar_catalogo_excel.sql`.
+
+No ejecutes `01_schema.sql` esperando que modifique tablas ya existentes: `CREATE TABLE IF NOT EXISTS` no altera estructuras anteriores. No vuelvas a ejecutar la migración 04 si ya fue aplicada. El script 02 puede repetirse sin duplicar los registros importados.
+
+## 3. Modelo de datos
+
+- `usuarios`: cuentas de estudiantes, administradores y rol disponible para vendedores.
+- `vendedores`: responsables y datos de contacto capturados en el Excel. No se crean cuentas ni contraseñas de vendedor.
+- `negocios`: información, ubicación, teléfono, horario, observaciones y responsable.
+- `categorias`: catálogo normalizado de categorías de productos.
+- `productos`: descripción, precio, disponibilidad, inventario, variantes fuente, preparación y fila de origen.
+- `producto_variantes`: opciones que se pudieron separar sin adivinar datos.
+- `puntos_entrega`: ubicaciones, referencias, descripción y disponibilidad de entrega.
+- `pedidos` y `detalle_pedidos`: conservan las reglas de integridad para que cada pedido pertenezca a un negocio y sus productos correspondan a ese mismo negocio.
+
+## 4. Configurar y ejecutar el backend
 
 ```powershell
 cd DELIVERY_BACKEND
 Copy-Item .env.example .env
 npm install
-```
-
-Edita `DELIVERY_BACKEND/.env` y coloca las credenciales reales de tu servidor MySQL. No subas ese archivo a GitHub; está excluido mediante `.gitignore`.
-
-Inicia el backend:
-
-```powershell
 npm run dev
 ```
 
-El servidor utiliza el puerto **4000** por defecto.
+Edita `.env` con las credenciales reales de MySQL. No subas ese archivo a GitHub. El backend utiliza el puerto 4000 por defecto.
 
-## 3. Ejecutar el frontend
+## 5. Ejecutar el frontend
 
-Abre una segunda terminal:
+En otra terminal:
 
 ```powershell
 cd frontend
@@ -83,27 +99,20 @@ npm install
 npm run dev
 ```
 
-Vite utiliza el puerto **5173** y reenvía las solicitudes que comienzan con `/api` al backend en el puerto **4000**.
+Vite utiliza el puerto 5173 y reenvía las solicitudes `/api` al backend en el puerto 4000.
 
-## 4. Rutas disponibles
+## 6. Rutas API
 
 | Método | Ruta | Función |
 |---|---|---|
-| GET | `/api/test-db` | Comprueba la conexión e informa la base utilizada |
-| GET | `/api/roles` | Consulta los roles permitidos en `usuarios.rol` |
-| GET | `/api/negocios` | Lista los negocios activos |
-| GET | `/api/productos` | Lista los productos disponibles |
+| GET | `/api/test-db` | Comprueba la conexión y muestra la base utilizada |
+| GET | `/api/roles` | Consulta los roles disponibles |
+| GET | `/api/negocios` | Lista negocios activos y datos de responsable |
+| GET | `/api/negocios/:id/puntos-entrega` | Lista puntos de entrega de un negocio |
+| GET | `/api/productos` | Lista productos disponibles con categoría |
 | GET | `/api/productos?id_negocio=1` | Filtra productos por negocio |
-
-Con el frontend activo, estas rutas también pueden consultarse desde `http://localhost:5173/api/...`.
-
-## 5. Reglas importantes del modelo
-
-- Cada pedido pertenece a un usuario y a un solo negocio.
-- Los productos de un pedido deben pertenecer al mismo negocio del pedido.
-- El detalle conserva el negocio para validar esa relación mediante claves foráneas compuestas.
-- El frontend se comunica con MySQL únicamente a través del backend.
+| GET | `/api/productos/:id/variantes` | Lista variantes estructuradas de un producto |
 
 ## Estado
 
-La estructura SQL, los datos iniciales y las rutas básicas de consulta están preparados. El registro de usuarios, autenticación, carrito, creación de pedidos y paneles de gestión se implementarán por etapas.
+El esquema y el catálogo del Excel están preparados en GitHub. Los scripts SQL deben ejecutarse en MySQL Workbench para aplicar los cambios a la instancia local. El frontend todavía requiere conectar sus componentes a los endpoints reales.
