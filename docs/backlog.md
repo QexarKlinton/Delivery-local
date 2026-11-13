@@ -14,7 +14,7 @@
 
 ---
 
-## 📊 Tabla General del Backlog
+## Tabla General del Backlog
 
 | ID | Historia de Usuario | Criterios de Aceptación | Funcionalidad | Prioridad (MoSCoW) | Estado |
 | :--- | :--- | :--- | :--- | :---: | :---: |
