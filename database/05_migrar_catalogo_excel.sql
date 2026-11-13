@@ -36,18 +36,15 @@ CREATE TABLE IF NOT EXISTS producto_variantes (
 
 CREATE TABLE IF NOT EXISTS puntos_entrega (
   id_punto_entrega INT AUTO_INCREMENT PRIMARY KEY,
-  id_negocio INT NOT NULL,
   nombre VARCHAR(180) NOT NULL,
-  ubicacion_referencia TEXT,
-  descripcion TEXT,
-  disponibilidad_texto TEXT,
-  datos_fuente TEXT NULL,
-  fila_excel INT NULL,
-  orden_fuente INT NOT NULL DEFAULT 1,
+  tipo VARCHAR(30) NOT NULL,
+  edificio VARCHAR(120) NOT NULL DEFAULT 'CUTlaquepaque',
+  referencia TEXT NULL,
+  descripcion TEXT NULL,
   activo BOOLEAN NOT NULL DEFAULT TRUE,
-  CONSTRAINT uq_punto_entrega_fuente UNIQUE (id_negocio,fila_excel,orden_fuente),
-  CONSTRAINT fk_puntos_entrega_negocio FOREIGN KEY (id_negocio)
-    REFERENCES negocios(id_negocio) ON UPDATE CASCADE ON DELETE CASCADE
+  orden INT NOT NULL,
+  CONSTRAINT uq_puntos_entrega_nombre UNIQUE (nombre),
+  CONSTRAINT uq_puntos_entrega_orden UNIQUE (orden)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Columnas nuevas en negocios (la consulta comprueba si ya existen).
@@ -113,5 +110,12 @@ PREPARE stmt FROM @ddl; EXECUTE stmt; DEALLOCATE PREPARE stmt;
 SET @ddl = IF((SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE CONSTRAINT_SCHEMA=DATABASE() AND TABLE_NAME='productos' AND CONSTRAINT_NAME='fk_productos_categoria')=0, 'ALTER TABLE productos ADD CONSTRAINT fk_productos_categoria FOREIGN KEY (id_categoria) REFERENCES categorias(id_categoria) ON UPDATE CASCADE ON DELETE SET NULL', 'SELECT 1');
 PREPARE stmt FROM @ddl; EXECUTE stmt; DEALLOCATE PREPARE stmt;
 
--- La migración solo amplía la estructura. La importación de los seis negocios
--- y sus productos se realiza después con 02_datos_iniciales.sql.
+
+-- Relaciona pedidos con uno de los 21 puntos institucionales.
+SET @ddl = IF((SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='pedidos' AND COLUMN_NAME='id_punto_entrega')=0, 'ALTER TABLE pedidos ADD COLUMN id_punto_entrega INT NULL AFTER punto_entrega', 'SELECT 1');
+PREPARE stmt FROM @ddl; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+SET @ddl = IF((SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE CONSTRAINT_SCHEMA=DATABASE() AND TABLE_NAME='pedidos' AND CONSTRAINT_NAME='fk_pedidos_punto_entrega')=0, 'ALTER TABLE pedidos ADD CONSTRAINT fk_pedidos_punto_entrega FOREIGN KEY (id_punto_entrega) REFERENCES puntos_entrega(id_punto_entrega) ON UPDATE CASCADE ON DELETE SET NULL', 'SELECT 1');
+PREPARE stmt FROM @ddl; EXECUTE stmt; DEALLOCATE PREPARE stmt;
+
+-- La migración solo amplía la estructura; los datos se importan con 02_datos_iniciales.sql.
