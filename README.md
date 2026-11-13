@@ -40,7 +40,7 @@ El catálogo de negocios se integró desde `menu_completoo.xlsx` (Hoja1):
 - 73 productos con descripción, precio, categoría, disponibilidad, existencias, variantes informadas y tiempo de preparación.
 - 17 categorías de producto normalizadas por nombre (se unificaron diferencias de mayúsculas/minúsculas).
 - 37 variantes estructuradas cuando el Excel proporcionó opciones identificables; los textos originales de variantes y precios también se conservan en cada producto.
-- 9 puntos de entrega registrados.
+- 21 puntos institucionales: Aulas 1 a 20 y Administración (edificio CEMSAC).
 
 Se conserva una referencia a la fila de origen del Excel (`fila_fuente` / `fila_excel`). Esto permite que el script sea repetible y conserva incluso los dos registros de “Jarra de Sake 240 ml” que aparecen en filas distintas del Excel.
 
@@ -60,10 +60,7 @@ La base de datos se llama **cutlaquepaque_delivery**.
 
 ### Si ya existe la base anterior del proyecto
 
-1. Si todavía no migraste la integridad de pedidos, ejecuta `database/03_validar_migracion_pedidos.sql`. Solo si `detalles_con_negocio_incorrecto` es 0, ejecuta una vez `database/04_migrar_integridad_pedidos.sql`.
-2. Ejecuta una sola vez `database/05_migrar_catalogo_excel.sql` para agregar las columnas y tablas del catálogo ampliado.
-3. Ejecuta `database/02_datos_iniciales.sql` para importar el catálogo.
-4. Ejecuta `database/06_validar_catalogo_excel.sql`.
+Ejecuta una sola vez `database/07_instalacion_definitiva.sql`. Este archivo reúne la migración de integridad, la ampliación del catálogo, la importación de los seis negocios y los 73 productos, y los 21 puntos de entrega del campus. Conserva usuarios y pedidos anteriores y desactiva los cinco negocios de prueba sin eliminarlos. No ejecutes por separado los scripts 02, 04 o 05 si utilizas el script 07.
 
 No ejecutes `01_schema.sql` esperando que modifique tablas ya existentes: `CREATE TABLE IF NOT EXISTS` no altera estructuras anteriores. No vuelvas a ejecutar la migración 04 si ya fue aplicada. El script 02 puede repetirse sin duplicar los registros importados.
 
@@ -75,7 +72,7 @@ No ejecutes `01_schema.sql` esperando que modifique tablas ya existentes: `CREAT
 - `categorias`: catálogo normalizado de categorías de productos.
 - `productos`: descripción, precio, disponibilidad, inventario, variantes fuente, preparación y fila de origen.
 - `producto_variantes`: opciones que se pudieron separar sin adivinar datos.
-- `puntos_entrega`: ubicaciones, referencias, descripción y disponibilidad de entrega.
+- `puntos_entrega`: 20 aulas y el edificio de Administración (CEMSAC), disponibles para seleccionar al crear un pedido.
 - `pedidos` y `detalle_pedidos`: conservan las reglas de integridad para que cada pedido pertenezca a un negocio y sus productos correspondan a ese mismo negocio.
 
 ## 4. Configurar y ejecutar el backend
@@ -108,7 +105,7 @@ Vite utiliza el puerto 5173 y reenvía las solicitudes `/api` al backend en el p
 | GET | `/api/test-db` | Comprueba la conexión y muestra la base utilizada |
 | GET | `/api/roles` | Consulta los roles disponibles |
 | GET | `/api/negocios` | Lista negocios activos y datos de responsable |
-| GET | `/api/negocios/:id/puntos-entrega` | Lista puntos de entrega de un negocio |
+| GET | `/api/puntos-entrega` | Lista los 21 puntos de entrega institucionales |
 | GET | `/api/productos` | Lista productos disponibles con categoría |
 | GET | `/api/productos?id_negocio=1` | Filtra productos por negocio |
 | GET | `/api/productos/:id/variantes` | Lista variantes estructuradas de un producto |
