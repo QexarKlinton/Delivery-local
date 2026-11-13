@@ -55,7 +55,7 @@ El backend valida las credenciales y permite el acceso al estudiante. El fronten
 La prueba se aprueba si las credenciales coinciden con las almacenadas en MySQL, la API responde correctamente y el usuario puede acceder sin errores.
 
 ---
-
+## CASOS DE PRUEBA DE INTEGRACIÓN 
 ## CP-INT-002 — Contraseña incorrecta
 
 > **Tipo:** Prueba de integración
@@ -407,3 +407,235 @@ El sistema recupera y muestra correctamente los cinco establecimientos registrad
 **Criterio de aprobación**
 
 La prueba se aprueba si el frontend muestra los cinco negocios activos y la información coincide con los registros almacenados en MySQL.
+
+---
+
+## CASOS DR PRUEBA UNITARIOS
+
+## CP-UNI-001. Cálculo del total del pedido
+
+> **Tipo:** Prueba unitaria
+**Proyecto:** Cutlaquepaque Delivery
+
+**Objetivo:**
+
+Verificar que la función encargada de calcular el total de un pedido realice correctamente la multiplicación del precio unitario de cada producto por su cantidad y sume los importes para obtener el total correspondiente.
+
+**Componentes involucrados:**
+
+Función de cálculo del total del pedido.
+Datos de productos y cantidades.
+Módulo de procesamiento de pedidos.
+
+**Precondiciones:**
+
+La función de cálculo del total debe estar implementada.
+Se deben contar con productos que tengan precios y cantidades válidas.
+La prueba se debe ejecutar de manera aislada, sin necesidad de conectarse a la base de datos.
+
+**Datos de prueba:**
+
+Producto Precio unitario Cantidad Subtotal
+Taco de bistec $20.00 2 $40.00
+Agua de horchata $25.00 1 $25.00
+Total esperado $65.00
+
+**Procedimiento:**
+
+Ingresar a la plataforma Cutlaquepaque Delivery.
+Iniciar sesión con una cuenta de estudiante registrada.
+Consultar los negocios disponibles.
+Seleccionar el negocio "Tacos Beny".
+Seleccionar el producto "Taco de bistec".
+Agregar dos unidades del producto al carrito.
+Revisar que el sistema muestre correctamente el producto, la cantidad y el precio.
+Continuar a la pantalla de confirmación del pedido.
+Verificar que el total sea de $40.00.
+Confirmar el pedido.
+Comprobar que el sistema muestre un mensaje indicando que el pedido se realizó correctamente.
+
+**Resultado esperado:**
+
+El estudiante debe poder completar el proceso de compra sin inconvenientes. El sistema debe mostrar correctamente los productos seleccionados, la cantidad, el total de $40.00 y el punto de entrega establecido. Al confirmar, debe generar el pedido y mostrar una notificación de confirmación.
+
+**Resultado obtenido:**
+
+Pendiente de ejecución.
+
+**Criterio de aprobación:**
+La prueba se considera aprobada si el estudiante logra realizar el pedido de principio a fin, recibe una confirmación visual y el pedido queda registrado correctamente en la plataforma y en la base de datos.
+
+---
+
+## CP-UNI-002. Validación de campos obligatorios
+
+> **Tipo:** Prueba unitaria
+**Proyecto:** Cutlaquepaque Delivery
+
+**Objetivo:**
+
+Verificar que la función encargada de validar los campos obligatorios del formulario de registro identifique correctamente cuando uno o varios campos se encuentran vacíos y devuelva los mensajes de validación correspondientes.
+
+**Componentes involucrados:**
+
+Función de validación de formularios.
+Campos de nombre, correo electrónico y contraseña.
+Módulo de registro de usuarios.
+
+**Precondiciones:**
+
+La función de validación debe estar implementada.
+Se deben conocer los campos obligatorios del formulario de registro.
+La prueba debe ejecutarse de manera aislada, sin enviar información al backend ni consultar la base de datos.
+
+**Datos de prueba:**
+
+Campo Valor ingresado
+Nombre (Vacío)
+Correo electrónico estudiante2@cutlaquepaque.edu.mx
+Contraseña Clave12345
+
+**Procedimiento:**
+
+Ejecutar la función de validación del formulario de registro.
+Enviar los datos de prueba con el campo de nombre vacío.
+Verificar que la función detecte que falta información obligatoria.
+Comprobar que se genere un mensaje indicando que el nombre es obligatorio.
+Ejecutar nuevamente la función con todos los campos completos.
+Verificar que la función permita continuar cuando los datos cumplen las validaciones establecidas.
+
+**Resultado esperado:**
+
+La función debe identificar que el campo nombre está vacío y devolver un mensaje de validación, por ejemplo: "El nombre es obligatorio". Cuando todos los campos estén completos y sean válidos, debe permitir continuar con el proceso de registro.
+
+**Resultado obtenido:**
+
+Pendiente de ejecución.
+
+**Criterio de aprobación:**
+
+La prueba se considera aprobada si la función detecta correctamente los campos vacíos, devuelve los mensajes correspondientes y permite continuar únicamente cuando los datos cumplen las condiciones establecidas.
+
+## Casos de prueba de aceptación
+
+## CP-ACE-001. Realización de pedido por un estudiante
+
+> **Tipo:** Prueba de aceptación
+**Proyecto:** Cutlaquepaque Delivery
+
+**Objetivo:**
+
+Comprobar que un estudiante pueda realizar correctamente un pedido de comida mediante la plataforma Cutlaquepaque Delivery, desde la selección de un negocio y sus productos hasta la confirmación del pedido, verificando que el sistema cumpla con la necesidad principal del usuario.
+
+**Componentes involucrados:**
+
+Interfaz de usuario (Frontend).
+Módulo de inicio de sesión.
+Catálogo de negocios y productos.
+Módulo de carrito de compras.
+Módulo de confirmación de pedidos.
+Backend y base de datos MySQL.
+
+**Precondiciones:**
+
+El estudiante debe tener una cuenta registrada en la plataforma.
+El estudiante debe haber iniciado sesión correctamente.
+Debe existir al menos un negocio activo con productos disponibles.
+El sistema debe estar conectado correctamente con el backend y la base de datos.
+El negocio seleccionado debe aceptar pedidos.
+
+**Datos de prueba:**
+Campo | Valor
+Usuario | estudiante@cutlaquepaque.edu.mx
+Negocio | Tacos Beny
+Producto | Taco de bistec
+Precio unitario | $20.00
+Cantidad | 2
+Total esperado | $40.00
+Punto de entrega | Entrada principal del Cutlaquepaque
+
+**Procedimiento:**
+
+Ingresar a la plataforma Cutlaquepaque Delivery.
+Iniciar sesión con una cuenta de estudiante registrada.
+Consultar los negocios disponibles.
+Seleccionar el negocio "Tacos Beny".
+Seleccionar el producto "Taco de bistec".
+Agregar dos unidades del producto al carrito.
+Revisar que el sistema muestre correctamente el producto, la cantidad y el precio.
+Continuar a la pantalla de confirmación del pedido.
+Verificar que el total sea de $40.00.
+Confirmar el pedido.
+Comprobar que el sistema muestre un mensaje indicando que el pedido se realizó correctamente.
+
+**Resultado esperado:**
+
+El estudiante debe poder completar el proceso de compra sin inconvenientes. El sistema debe mostrar correctamente los productos seleccionados, la cantidad, el total de $40.00 y el punto de entrega establecido. Al confirmar, debe generar el pedido y mostrar una notificación de confirmación.
+
+**Resultado obtenido:**
+
+Pendiente de ejecución.
+
+**Criterio de aprobación:**
+
+La prueba se considera aprobada si el estudiante logra realizar el pedido de principio a fin, recibe una confirmación visual y el pedido queda registrado correctamente en la plataforma y en la base de datos.
+
+---
+
+## CP-ACE-002. Consulta de negocios y selección de alimentos
+
+> **Tipo:** Prueba de aceptación
+**Proyecto:** Cutlaquepaque Delivery
+
+**Objetivo:**
+
+Verificar que un estudiante pueda consultar los negocios de comida disponibles en la plataforma, visualizar sus productos y seleccionar alimentos de su preferencia, comprobando que la aplicación facilite el acceso al catálogo de opciones de comida disponibles alrededor del centro universitario.
+
+**Componentes involucrados:**
+
+Interfaz de usuario (Frontend).
+Módulo de consulta de negocios.
+Catálogo de productos.
+Backend y API.
+Base de datos MySQL.
+
+**Precondiciones:**
+
+
+La plataforma debe encontrarse disponible.
+Deben existir negocios registrados en la base de datos.
+Los negocios que se consultarán deben estar marcados como activos.
+Cada negocio debe contar con al menos un producto registrado.
+Los productos disponibles deben estar marcados como disponibles.
+
+**Datos de prueba:**
+
+Negocio Producto de ejemplo Precio
+Tamales Mary Tamal verde $18.00
+Tacos Beny Taco de bistec $20.00
+Fonda de Lety Comida del día $75.00
+Lonches Mario Lonche de pierna $55.00
+Aguas Frescas La Michoacana Agua de horchata $25.00
+
+**Procedimiento:**
+
+Ingresar a la plataforma Cutlaquepaque Delivery.
+Acceder a la sección de negocios disponibles.
+Consultar el listado de establecimientos registrados.
+Verificar que se muestren los negocios activos.
+Seleccionar uno de los negocios disponibles, por ejemplo, "Tacos Beny".
+Consultar el catálogo de productos de ese establecimiento.
+Seleccionar el producto "Taco de bistec".
+Verificar que se muestre correctamente el nombre, precio y disponibilidad del producto.
+Comprobar que el estudiante pueda seleccionar el producto para agregarlo a su pedido.
+
+**Resultado esperado:**
+
+La plataforma debe mostrar correctamente los negocios activos y permitir que el estudiante consulte los productos correspondientes a cada establecimiento. La información presentada debe coincidir con los registros almacenados en la base de datos. El estudiante debe poder seleccionar un producto disponible para continuar con su pedido.
+
+**Resultado obtenido:** 
+
+Pendiente de ejecución.
+
+**Criterio de aprobación:**
+La prueba se considera aprobada si el estudiante puede consultar los negocios disponibles, acceder a sus respectivos catálogos, visualizar correctamente la información de los productos y seleccionar un alimento disponible sin errores.
