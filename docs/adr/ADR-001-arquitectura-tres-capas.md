@@ -14,6 +14,10 @@ Se utilizará una arquitectura de tres capas:
 1. **Presentación:** React, HTML, CSS y JavaScript para la interfaz del usuario.
 2. **Lógica de negocio:** Node.js y Express para procesar solicitudes mediante una API REST.
 3. **Datos:** MySQL para almacenar usuarios, productos, pedidos y demás información.
+## Justificación
+
+Separar el sistema en tres capas evita mezclar el código visual con la lógica del servidor y las consultas a la base de datos. Esto permite que el equipo trabaje en paralelo sin generar conflictos constantes, facilita encontrar errores y mantiene una curva de aprendizaje baja adecuada al tamaño y tiempo del proyecto.
+
 
 ## Alternativas consideradas
 
