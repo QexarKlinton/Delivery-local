@@ -34,3 +34,41 @@ La deuda técnica se registra para hacer visibles las decisiones pendientes y ev
 ## Seguimiento
 
 Cada deuda deberá convertirse en una tarea o issue cuando se programe su resolución. Al cerrarla, se documentará el cambio mediante un commit y Pull Request.
+
+**Fecha de registro:** 29/10/2026.
+
+# DT-004: Diseño responsive móvil incompleto
+
+- **Descripción:** Algunas interfaces y componentes del sistema aún no han sido adaptados completamente para dispositivos móviles y diferentes resoluciones de pantalla.
+
+- **Impacto/consecuencias:** Los usuarios que accedan desde teléfonos inteligentes o tabletas podrían experimentar problemas de visualización, navegación y usabilidad.
+
+- **Solución:** Aplicar técnicas de diseño responsivo, utilizar Media Queries y realizar pruebas en distintos dispositivos para garantizar una experiencia de usuario consistente.
+
+- **Prioridad:** Media.
+
+- **Fecha de registro:** 10/11/2026.
+
+# DT-005: Automatización de pruebas pendiente
+
+- **Descripción:** Actualmente la validación de funcionalidades se realiza principalmente mediante pruebas manuales, sin una estrategia de pruebas automatizadas que facilite la detección temprana de errores.
+
+- **Impacto/consecuencias:** Las futuras modificaciones podrían introducir fallos no detectados oportunamente, incrementando el riesgo de errores en producción y el tiempo de validación.
+
+- **Solución:** Implementar pruebas automatizadas para los módulos principales del sistema, incluyendo pruebas unitarias, pruebas de integración y validaciones continuas durante el desarrollo.
+
+- **Prioridad:** Alta.
+
+- **Fecha de registro:** 10/11/2026.
+
+  # DT-006: Optimización de consultas SQL pendiente
+
+- **Descripción:** Algunas consultas y operaciones de acceso a la base de datos requieren optimización para mantener un rendimiento adecuado conforme aumente el volumen de información procesada.
+
+- **Impacto/consecuencias:** El sistema podría presentar tiempos de respuesta lentos, consumo innecesario de recursos y una experiencia de usuario menos eficiente.
+
+- **Solución:** Revisar las consultas críticas, aplicar índices cuando sea necesario, optimizar sentencias SQL y realizar pruebas de rendimiento sobre la base de datos.
+
+- **Prioridad:** Media.
+
+- **Fecha de registro:** 10/11/2026.
