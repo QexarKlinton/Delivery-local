@@ -5,7 +5,7 @@
 
 ---
 
-## 📋 Registro de Cambios y Justificación Arquitectónica
+##  Registro de Cambios y Justificación Arquitectónica
 
 **Cambio realizado:** Eliminación del manejo de contraseñas y del módulo de recuperación de contraseña (anteriormente `HU-07`). Migración del flujo de registro e inicio de sesión a autenticación mediante **número telefónico**[cite: 1, 2].
 
