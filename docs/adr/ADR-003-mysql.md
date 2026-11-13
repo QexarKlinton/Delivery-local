@@ -15,8 +15,10 @@ Se utilizará MySQL como sistema gestor de base de datos relacional para la prim
 
 - **PostgreSQL:** ofrece capacidades relacionales similares.
 - **MongoDB:** utiliza un modelo de documentos y una estructura diferente.
+## Justificación 
 
 Se elige MySQL porque el alcance actual está orientado a un modelo relacional y sus necesidades previstas pueden cubrirse mediante tablas y consultas SQL.
+Garantiza la integridad de los pedidos mediante transacciones y ofrece compatibilidad directa con Node.js.
 
 ## Consecuencias
 
