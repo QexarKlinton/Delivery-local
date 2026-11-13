@@ -32,6 +32,7 @@ Verificar que el frontend se comunique correctamente con la API REST y que el ba
 
 
 | Campo | Valor|
+|---|---|
 |Correo electrónico | estudiante@cutlaquepaque.edu.mx|
 |Contraseña | Clave12345|
 |Usuario | Estudiante registrado |
@@ -55,6 +56,7 @@ El backend valida las credenciales y permite el acceso al estudiante. El fronten
 La prueba se aprueba si las credenciales coinciden con las almacenadas en MySQL, la API responde correctamente y el usuario puede acceder sin errores.
 
 ---
+
 ## CASOS DE PRUEBA DE INTEGRACIÓN 
 ## CP-INT-002 — Contraseña incorrecta
 
@@ -80,10 +82,11 @@ Comprobar que el backend identifique una contraseña incorrecta y que el fronten
 
 **Datos de prueba**
 
-Campo| Valor
-Correo electrónico| estudiante@cutlaquepaque.edu.mx
-Contraseña| Incorrecta123
-Estado de la cuenta| Activa
+|Campo| Valor|
+|---|---|
+|Correo electrónico| estudiante@cutlaquepaque.edu.mx|
+|Contraseña| Incorrecta123|
+|Estado de la cuenta| Activa|
 
 **Procedimiento**
 
@@ -128,10 +131,11 @@ Verificar que el sistema identifique los campos vacíos durante el inicio de ses
 
 **Datos de prueba**
 
-Campo| Valor
-Correo electrónico| Vacío
-Contraseña| Vacía
-Acción| Presionar iniciar sesión
+|Campo| Valor|
+|---|---|
+|Correo electrónico| Vacío|
+|Contraseña| Vacía|
+|Acción| Presionar iniciar sesión|
 
 **Procedimiento**
 
@@ -177,13 +181,14 @@ Verificar que el frontend se comunique correctamente con la API REST y que el ba
 
 **Datos de prueba**
 
-Campo| Valor
-Negocio| Tacos Beny
-Producto| Taco de bistec
-Cantidad| 2
-Precio unitario| $20 MXN
-Total esperado| $40 MXN
-Punto de entrega| Entrada principal del Cutlaquepaque
+|Campo| Valor|
+|---|---|
+|Negocio| Tacos Beny|
+|Producto| Taco de bistec|
+|Cantidad| 2|
+|Precio unitario| $20 MXN|
+|Total esperado| $40 MXN|
+|Punto de entrega| Entrada principal del Cutlaquepaque|
 
 **Procedimiento**
 
@@ -230,14 +235,15 @@ Comprobar que el usuario pueda consultar los pedidos realizados y que la informa
 
 **Datos de prueba**
 
-Campo| Valor
-ID del pedido| 1
-Usuario| Estudiante registrado
-Negocio| Tacos Beny
-Producto| Taco de bistec
-Cantidad| 2
-Total| $40 MXN
-Estado| Pendiente
+|Campo| Valor|
+|---|---|
+|ID del pedido| 1|
+|Usuario| Estudiante registrado|
+|Negocio| Tacos Beny|
+|Producto| Taco de bistec|
+|Cantidad| 2|
+|Total| $40 MXN|
+|Estado| Pendiente|
 
 **Procedimiento**
 
@@ -283,11 +289,12 @@ Verificar que el backend impida el acceso a las funciones privadas cuando un usu
 
 **Datos de prueba**
 
-Campo| Valor
-Usuario| Sin sesión activa
-Token de autenticación| Inválido
-Recurso solicitado| Mis pedidos
-Método HTTP| GET
+|Campo| Valor|
+|---|---|
+|Usuario| Sin sesión activa|
+|Token de autenticación| Inválido|
+|Recurso solicitado| Mis pedidos|
+|Método HTTP| GET|
 
 **Procedimiento**
 
@@ -332,12 +339,13 @@ Verificar que el formulario de registro y el backend validen los campos obligato
 
 **Datos de prueba**
 
-Campo| Valor
-Nombre| Vacío
-Correo electrónico| estudiante2@cutlaquepaque.edu.mx
-Contraseña| Clave12345
-Matrícula| 123456
-Teléfono| 3312345678
+|Campo| Valor|
+|---|---|
+|Nombre| Vacío|
+|Correo electrónico| estudiante2@cutlaquepaque.edu.mx|
+|Contraseña| Clave12345|
+|Matrícula| 123456|
+|Teléfono| 3312345678|
 
 **Procedimiento**
 
@@ -383,12 +391,13 @@ Verificar que el frontend obtenga correctamente desde la API REST la informació
 
 **Datos de prueba**
 
-ID| Negocio| Estado
-1| Tamales Mary| Activo
-2| Tacos Beny| Activo
-3| Fonda de Lety| Activo
-4| Lonches Mario| Activo
-5| Aguas Frescas La Michoacana| Activo
+|ID| Negocio| Estado|
+|---|---|---|
+|1| Tamales Mary| Activo|
+|2| Tacos Beny| Activo|
+|3| Fonda de Lety| Activo|
+|4| Lonches Mario| Activo|
+|5| Aguas Frescas La Michoacana| Activo|
 
 **Procedimiento**
 
@@ -435,10 +444,11 @@ La prueba se debe ejecutar de manera aislada, sin necesidad de conectarse a la b
 
 **Datos de prueba:**
 
-Producto | Precio unitario | Cantidad | Subtotal
-Taco de bistec | $20.00 |2 | $40.00
-Agua de horchata | $25.00 | 1 | $25.00
-Total esperado $65.00
+|Producto | Precio unitario | Cantidad | Subtotal|
+|---|---|---|---|
+|Taco de bistec | $20.00 |2 | $40.00|
+|Agua de horchata | $25.00 | 1 | $25.00|
+|Total esperado $65.00|
 
 **Procedimiento:**
 
@@ -490,10 +500,11 @@ La prueba debe ejecutarse de manera aislada, sin enviar información al backend 
 
 **Datos de prueba:**
 
-Campo | Valor | ingresado
-Nombre | (Vacío)
-Correo electrónico | estudiante2@cutlaquepaque.edu.mx
-Contraseña | Clave12345
+|Campo | Valor ingresado|
+|---|---|
+|Nombre | (Vacío)|
+|Correo electrónico | estudiante2@cutlaquepaque.edu.mx|
+|Contraseña | Clave12345|
 
 **Procedimiento:**
 
@@ -545,14 +556,15 @@ El sistema debe estar conectado correctamente con el backend y la base de datos.
 El negocio seleccionado debe aceptar pedidos.
 
 **Datos de prueba:**
-Campo | Valor
-Usuario | estudiante@cutlaquepaque.edu.mx
-Negocio | Tacos Beny
-Producto | Taco de bistec
-Precio unitario | $20.00
-Cantidad | 2
-Total esperado | $40.00
-Punto de entrega | Entrada principal del Cutlaquepaque
+|Campo | Valor|
+|---|---|
+|Usuario | estudiante@cutlaquepaque.edu.mx|
+|Negocio | Tacos Beny|
+|Producto | Taco de bistec|
+|Precio unitario | $20.00|
+|Cantidad | 2|
+|Total esperado | $40.00|
+|Punto de entrega | Entrada principal del Cutlaquepaque|
 
 **Procedimiento:**
 
@@ -610,12 +622,13 @@ Los productos disponibles deben estar marcados como disponibles.
 
 **Datos de prueba:**
 
-Negocio | Producto de ejemplo | Precio
-Tamales Mary | Tamal verde | $18.00
-Tacos Beny | Taco de bistec | $20.00
-Fonda de Lety | Comida del día | $75.00
-Lonches Mario | Lonche de pierna | $55.00
-Aguas Frescas La Michoacana | Agua de horchata | $25.00
+|Negocio | Producto de ejemplo | Precio|
+|---|---|---|
+|Tamales Mary | Tamal verde | $18.00|
+|Tacos Beny | Taco de bistec | $20.00|
+|Fonda de Lety | Comida del día | $75.00|
+|Lonches Mario | Lonche de pierna | $55.00|
+|Aguas Frescas La Michoacana | Agua de horchata | $25.00|
 
 **Procedimiento:**
 
