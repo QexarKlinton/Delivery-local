@@ -90,26 +90,15 @@ app.get('/api/negocios', async (req, res, next) => {
   }
 });
 
-// Lista puntos de entrega activos de un negocio.
-app.get('/api/negocios/:idNegocio/puntos-entrega', async (req, res, next) => {
+// Lista los 21 puntos institucionales de entrega de CUTlaquepaque.
+app.get('/api/puntos-entrega', async (req, res, next) => {
   try {
-    const idNegocio = Number(req.params.idNegocio);
-
-    if (!Number.isInteger(idNegocio) || idNegocio <= 0) {
-      return res.status(400).json({
-        error: 'id_negocio debe ser un entero positivo.'
-      });
-    }
-
     const [puntos] = await pool.query(
-      `SELECT id_punto_entrega, id_negocio, nombre, ubicacion_referencia,
-              descripcion, disponibilidad_texto
+      `SELECT id_punto_entrega, nombre, tipo, edificio, referencia, descripcion
        FROM puntos_entrega
-       WHERE id_negocio = ? AND activo = TRUE
-       ORDER BY orden_fuente, id_punto_entrega`,
-      [idNegocio]
+       WHERE activo = TRUE
+       ORDER BY orden`
     );
-
     res.json(puntos);
   } catch (error) {
     next(error);
