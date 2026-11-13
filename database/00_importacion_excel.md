@@ -16,7 +16,7 @@
 | Productos | 73 |
 | Categorías | 17 |
 | Variantes estructuradas | 37 |
-| Puntos de entrega | 9 |
+| Puntos oficiales de entrega en CUTlaquepaque | 21 |
 
 ### Negocios
 
@@ -34,16 +34,13 @@
 - `categorias`: categorías de productos. Se unificaron únicamente diferencias de mayúsculas/minúsculas para evitar categorías duplicadas como `POSTRE` y `postre`.
 - `productos`: nombre, descripción, precio, categoría, disponibilidad, existencias, textos originales de variantes y precios de variantes, tiempo de preparación y número de fila del Excel.
 - `producto_variantes`: opciones que se pudieron separar de forma directa. Se registraron 30 opciones de La Esquina del Sazón, 3 de Alitas y 4 sabores de Jugo Boing. Las variantes sin precio explícito quedan con precio `NULL`.
-- `puntos_entrega`: puntos descritos en el Excel, con ubicación, descripción y disponibilidad.
+- `puntos_entrega`: 20 aulas y el edificio de Administración (CEMSAC), como ubicaciones oficiales para entregar pedidos dentro del CUTlaquepaque. Los nueve puntos comerciales que aparecían en el Excel no se usan como puntos institucionales de entrega.
 
 ## Decisiones para conservar la información
 
 - Se conserva una fila por producto del Excel. En Makito sushi aparecen dos filas con el nombre `Jarra de Sake 240 ml`; ambas se importan por separado porque tienen existencias distintas. Por ello, el esquema no impone unicidad por nombre de producto y utiliza la fila original como identificador de importación.
 - Los textos originales de disponibilidad, existencias no numéricas, variantes, precios de variantes y tiempos de preparación se guardan en columnas de texto. No se convierten en valores numéricos cuando el Excel no permite hacerlo con certeza.
-- En Mariscos Lalo'S 1. se separaron los tres puntos de entrega porque el Excel identifica explícitamente sus nombres, ubicaciones, descripciones y horarios.
-- En MERAKI RESTAURANT PIZZERIA se separaron los dos puntos que aparecen identificados en listas paralelas.
-- En Makito sushi. las cuatro columnas de puntos de entrega no están alineadas de manera clara. Se conserva su contenido completo en un registro marcado como `Punto de entrega (nombre no especificado en Excel)` y en `datos_fuente`, sin inventar una ubicación o un nombre.
-- El campo de ubicación del punto de Paleteria Dani contiene únicamente el texto de encabezado y no una referencia concreta. Se conserva sin completar con una dirección supuesta.
+- Los puntos comerciales externos descritos en el Excel no sustituyen las ubicaciones de entrega dentro de la universidad. La aplicación utilizará exclusivamente las 20 aulas y el edificio de Administración (CEMSAC).
 - Los cinco negocios de ejemplo de la versión anterior se desactivan, no se eliminan, para no afectar pedidos o historial que pudiera existir.
 - No se crean cuentas de acceso para vendedores: el Excel no contiene contraseñas ni credenciales de autenticación. Solo se importan los datos de contacto.
 
