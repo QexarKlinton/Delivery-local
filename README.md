@@ -58,7 +58,7 @@ Durante esta etapa se ha trabajado en:
 
 ### Base de Datos
 
-- MariaDB
+- My SQL 
 
 ### Control de Versiones
 
