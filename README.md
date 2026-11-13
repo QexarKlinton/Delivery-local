@@ -1,115 +1,78 @@
 # Delivery Local
 
-Plataforma de delivery local para el entorno universitario de **CUTlaquepaque**, que permite consultar negocios, productos y realizar pedidos con entrega en los puntos registrados.
+## Descripción
 
-## Tecnologías
+Plataforma web para la gestión de pedidos de entrega local que permite registrar usuarios y administrar solicitudes de entrega.
 
-| Capa | Tecnología |
-|---|---|
-| Frontend | React + Vite |
-| Backend | Node.js + Express |
-| API | REST + JSON |
-| Base de datos | MySQL / MariaDB |
-| Conexión | mysql2 |
+## Objetivo
 
-## Estructura principal
+Desarrollar una aplicación web que facilite el registro y seguimiento de solicitudes de entrega local.
 
-```text
-Delivery-local/
-├── DELIVERY_BACKEND/
-│   ├── src/db.js
-│   ├── src/index.js
-│   └── .env.example
-├── database/
-│   ├── 00_importacion_excel.md
-│   ├── 01_schema.sql
-│   ├── 02_datos_iniciales.sql
-│   ├── 03_validar_migracion_pedidos.sql
-│   ├── 04_migrar_integridad_pedidos.sql
-│   ├── 05_migrar_catalogo_excel.sql
-│   └── 06_validar_catalogo_excel.sql
-├── frontend/
-└── README.md
+## Tecnologías utilizadas
+
+- HTML5
+- CSS3
+- JavaScript
+- MySQL
+- Git
+- GitHub
+
+### Herramientas del proyecto
+
+- React y Vite para el frontend.
+- Node.js y Express para el backend.
+- `mysql2` para la conexión con MySQL.
+
+## Instalación
+
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/QexarKlinton/Delivery-local.git
 ```
 
-## 1. Catálogo definitivo importado
+### 2. Acceder al proyecto
 
-El catálogo de negocios se integró desde `menu_completoo.xlsx` (Hoja1):
+```bash
+cd Delivery-local
+```
 
-- 6 negocios y sus responsables/contactos.
-- 73 productos con descripción, precio, categoría, disponibilidad, existencias, variantes informadas y tiempo de preparación.
-- 17 categorías de producto normalizadas por nombre (se unificaron diferencias de mayúsculas/minúsculas).
-- 37 variantes estructuradas cuando el Excel proporcionó opciones identificables; los textos originales de variantes y precios también se conservan en cada producto.
-- 21 puntos institucionales: Aulas 1 a 20 y Administración (edificio CEMSAC).
+### 3. Configurar la base de datos
 
-Se conserva una referencia a la fila de origen del Excel (`fila_fuente` / `fila_excel`). Esto permite que el script sea repetible y conserva incluso los dos registros de “Jarra de Sake 240 ml” que aparecen en filas distintas del Excel.
+La base de datos se llama `cutlaquepaque_delivery`. En MySQL Workbench, ejecuta estos archivos en orden:
 
-Los cinco negocios de ejemplo del catálogo anterior (Tamales Mary, Tacos Beny, Fonda de Lety, Lonches Mario y Aguas Frescas La Michoacana) se desactivan, no se borran, para conservar cualquier historial que pudiera existir.
+1. `database/01_schema.sql`
+2. `database/02_datos_iniciales.sql`
+3. `database/06_validar_catalogo_excel.sql` para revisar los datos.
 
-Las celdas de fotografía/logotipo del Excel contienen `#VALUE!` o están vacías; por eso los campos `imagen_url` y `logo_url` quedan en NULL. Las imágenes no se publican como archivos ni se inventan enlaces. Los correos y teléfonos se conservan como texto fuente, incluso cuando el Excel contiene formatos que requieren confirmación.
-
-## 2. Preparar la base de datos
-
-La base de datos se llama **cutlaquepaque_delivery**.
-
-### Instalación nueva
-
-1. Ejecuta `database/01_schema.sql`.
-2. Ejecuta `database/02_datos_iniciales.sql`.
-3. Ejecuta `database/06_validar_catalogo_excel.sql` y revisa los conteos.
-
-### Si ya existe la base anterior del proyecto
-
-Ejecuta una sola vez `database/07_instalacion_definitiva.sql`. Este archivo reúne la migración de integridad, la ampliación del catálogo, la importación de los seis negocios y los 73 productos, y los 21 puntos de entrega del campus. Conserva usuarios y pedidos anteriores y desactiva los cinco negocios de prueba sin eliminarlos. No ejecutes por separado los scripts 02, 04 o 05 si utilizas el script 07.
-
-No ejecutes `01_schema.sql` esperando que modifique tablas ya existentes: `CREATE TABLE IF NOT EXISTS` no altera estructuras anteriores. No vuelvas a ejecutar la migración 04 si ya fue aplicada. El script 02 puede repetirse sin duplicar los registros importados.
-
-## 3. Modelo de datos
-
-- `usuarios`: cuentas de estudiantes, administradores y rol disponible para vendedores.
-- `vendedores`: responsables y datos de contacto capturados en el Excel. No se crean cuentas ni contraseñas de vendedor.
-- `negocios`: información, ubicación, teléfono, horario, observaciones y responsable.
-- `categorias`: catálogo normalizado de categorías de productos.
-- `productos`: descripción, precio, disponibilidad, inventario, variantes fuente, preparación y fila de origen.
-- `producto_variantes`: opciones que se pudieron separar sin adivinar datos.
-- `puntos_entrega`: 20 aulas y el edificio de Administración (CEMSAC), disponibles para seleccionar al crear un pedido.
-- `pedidos` y `detalle_pedidos`: conservan las reglas de integridad para que cada pedido pertenezca a un negocio y sus productos correspondan a ese mismo negocio.
-
-## 4. Configurar y ejecutar el backend
+Después, configura la conexión del backend:
 
 ```powershell
 cd DELIVERY_BACKEND
 Copy-Item .env.example .env
 npm install
+```
+
+Edita el archivo `DELIVERY_BACKEND/.env` con las credenciales de tu instalación local de MySQL. No compartas ni subas este archivo con credenciales a GitHub.
+
+### 4. Ejecutar la aplicación
+
+Inicia el backend desde `DELIVERY_BACKEND`:
+
+```bash
 npm run dev
 ```
 
-Edita `.env` con las credenciales reales de MySQL. No subas ese archivo a GitHub. El backend utiliza el puerto 4000 por defecto.
+En otra terminal, desde la raíz del proyecto, inicia el frontend:
 
-## 5. Ejecutar el frontend
-
-En otra terminal:
-
-```powershell
+```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-Vite utiliza el puerto 5173 y reenvía las solicitudes `/api` al backend en el puerto 4000.
+Abre en el navegador la dirección local que indique Vite (normalmente `http://localhost:5173`).
 
-## 6. Rutas API
+## Base de datos
 
-| Método | Ruta | Función |
-|---|---|---|
-| GET | `/api/test-db` | Comprueba la conexión y muestra la base utilizada |
-| GET | `/api/roles` | Consulta los roles disponibles |
-| GET | `/api/negocios` | Lista negocios activos y datos de responsable |
-| GET | `/api/puntos-entrega` | Lista los 21 puntos de entrega institucionales |
-| GET | `/api/productos` | Lista productos disponibles con categoría |
-| GET | `/api/productos?id_negocio=1` | Filtra productos por negocio |
-| GET | `/api/productos/:id/variantes` | Lista variantes estructuradas de un producto |
-
-## Estado
-
-El esquema y el catálogo del Excel están preparados en GitHub. Los scripts SQL deben ejecutarse en MySQL Workbench para aplicar los cambios a la instancia local. El frontend todavía requiere conectar sus componentes a los endpoints reales.
+El proyecto utiliza **MySQL**. MariaDB no forma parte de las tecnologías indicadas para este proyecto.
