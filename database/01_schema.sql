@@ -11,7 +11,7 @@ USE cutlaquepaque_delivery;
 
 -- USUARIOS
 CREATE TABLE IF NOT EXISTS usuarios (
-    id_usuario INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     correo VARCHAR(120) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
 
 -- NEGOCIOS
 CREATE TABLE IF NOT EXISTS negocios (
-    id_negocio INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id_negocio INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     descripcion TEXT,
     categoria VARCHAR(50),
@@ -37,8 +37,8 @@ CREATE TABLE IF NOT EXISTS negocios (
 
 -- PRODUCTOS
 CREATE TABLE IF NOT EXISTS productos (
-    id_producto INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    id_negocio INT UNSIGNED NOT NULL,
+    id_producto INT AUTO_INCREMENT PRIMARY KEY,
+    id_negocio INT NOT NULL,
     nombre VARCHAR(100) NOT NULL,
     descripcion TEXT,
     precio DECIMAL(10,2) NOT NULL,
@@ -55,9 +55,9 @@ CREATE TABLE IF NOT EXISTS productos (
 
 -- PEDIDOS
 CREATE TABLE IF NOT EXISTS pedidos (
-    id_pedido INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT UNSIGNED NOT NULL,
-    id_negocio INT UNSIGNED NOT NULL,
+    id_pedido INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    id_negocio INT NOT NULL,
     fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     total DECIMAL(10,2) NOT NULL DEFAULT 0.00,
     estado ENUM(
@@ -88,11 +88,11 @@ CREATE TABLE IF NOT EXISTS pedidos (
 -- id_negocio permite garantizar que el producto pertenezca
 -- al mismo negocio registrado en el pedido.
 CREATE TABLE IF NOT EXISTS detalle_pedidos (
-    id_detalle INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    id_pedido INT UNSIGNED NOT NULL,
-    id_negocio INT UNSIGNED NOT NULL,
-    id_producto INT UNSIGNED NOT NULL,
-    cantidad INT UNSIGNED NOT NULL,
+    id_detalle INT AUTO_INCREMENT PRIMARY KEY,
+    id_pedido INT NOT NULL,
+    id_negocio INT NOT NULL,
+    id_producto INT NOT NULL,
+    cantidad INT NOT NULL,
     precio_unitario DECIMAL(10,2) NOT NULL,
     CONSTRAINT fk_detalle_pedido_negocio
         FOREIGN KEY (id_pedido, id_negocio)
