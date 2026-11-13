@@ -7,3 +7,4 @@ Repositorio principal: [Delivery Local](https://github.com/QexarKlinton/Delivery
 - [Bloqueos del proyecto](blockers.md)
 - [Decisión de base de datos (ADR-003: MySQL)](adr/ADR-003-mysql.md)
 - [Deuda técnica](technical-debt.md)
+- **Colaborador:** Rodrigo
