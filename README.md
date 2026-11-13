@@ -20,7 +20,7 @@ Delivery Local propone una solución digital que permita registrar, administrar 
 
 Desarrollar una plataforma web que facilite la gestión de solicitudes de entrega local mediante una interfaz organizada, accesible y escalable.
 
----
+----
 
 ## Objetivos Específicos
 
