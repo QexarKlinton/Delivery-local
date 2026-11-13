@@ -1,236 +1,97 @@
 # Delivery Local
 
-Plataforma de delivery local orientada al entorno universitario de **CUTlaquepaque**, diseñada para facilitar la compra, gestión y entrega de alimentos sin que el usuario tenga que desplazarse fuera de sus actividades.
-
-> **Estado del repositorio:** documentación y base arquitectónica inicial. La implementación funcional se incorporará conforme avance el desarrollo.
-
-## Problema
-
-Dentro del entorno universitario, estudiantes, docentes y personal pueden perder tiempo al desplazarse para conseguir alimentos. La propuesta de Delivery Local centraliza la oferta de comida y el proceso de pedido en una sola plataforma.
-
-## Solución
-
-El sistema contempla un flujo de:
-
-```text
-Usuario
-   ↓
-Catálogo de alimentos
-   ↓
-Carrito
-   ↓
-Pedido
-   ↓
-Preparación
-   ↓
-Entrega dentro del área definida
-```
-
-El alcance inicial está pensado para **CUTlaquepaque y sus alrededores**, manteniendo el proyecto acotado a un contexto universitario.
-
-## Funcionalidades previstas
-
-### Cliente
-- Registro e inicio de sesión.
-- Consulta de productos y categorías.
-- Carrito de compras.
-- Creación de pedidos.
-- Consulta del estado del pedido.
-- Historial de pedidos.
-
-### Vendedor
-- Administración de productos.
-- Consulta y gestión de pedidos.
-- Administración del catálogo.
-
-### Administrador
-- Gestión de usuarios y roles.
-- Gestión de productos y vendedores.
-- Supervisión de pedidos.
-- Administración general del sistema.
-
-### Entrega
-- Definición del punto de entrega.
-- Actualización del estado del pedido.
-- Confirmación de entrega.
-
-## Visuales
-
-La actividad solicita evidencias visuales del proyecto. Como el repositorio se encuentra en una etapa inicial y todavía no contiene una interfaz funcional publicada, **no se incluyen capturas ficticias**.
-
-Cuando exista el prototipo, las capturas se agregarán en `docs/images/` y se documentará aquí el flujo principal:
-
-1. Inicio / catálogo.
-2. Detalle del producto.
-3. Carrito.
-4. Confirmación del pedido.
-5. Seguimiento.
-6. Panel de vendedor.
-
-### Arquitectura propuesta
-
-```mermaid
-flowchart TB
-    A[Cliente Web] --> B[API REST]
-    B --> C[Lógica de negocio]
-    C --> D[(MySQL)]
-
-    B --> E[Autenticación y autorización]
-    C --> F[Gestión de pedidos]
-    C --> G[Gestión de productos]
-    C --> H[Gestión de entregas]
-```
+Plataforma de delivery local para el entorno universitario de **CUTlaquepaque**, que permite consultar negocios, productos y realizar pedidos con entrega dentro del campus.
 
 ## Tecnologías
 
-La arquitectura propuesta para la primera versión utiliza:
-
 | Capa | Tecnología |
 |---|---|
-| Frontend | React, HTML, CSS y JavaScript |
+| Frontend | React + Vite |
 | Backend | Node.js + Express |
-| Comunicación | API REST + JSON |
-| Base de datos | MySQL |
-| Control de versiones | Git + GitHub |
+| API | REST + JSON |
+| Base de datos | MySQL / MariaDB |
+| Conexión | mysql2 |
 
-### Principio de comunicación
-
-El frontend **no se conecta directamente a MySQL**.
-
-```text
-Frontend
-   ↓ HTTP/JSON
-Backend / API REST
-   ↓
-MySQL
-```
-
-Esto permite concentrar validaciones, autenticación, autorización y reglas de negocio en el backend.
-
-## Arquitectura
-
-Se propone una arquitectura de tres capas:
-
-1. **Presentación:** interfaz web y experiencia del usuario.
-2. **Lógica de negocio:** API REST, validaciones y reglas del sistema.
-3. **Datos:** persistencia de usuarios, productos, pedidos y demás entidades en MySQL.
-
-La separación busca reducir el acoplamiento y facilitar el mantenimiento del proyecto.
-
-## Requisitos previos
-
-Para la futura ejecución local se contempla:
-
-- Git.
-- Node.js y npm.
-- MySQL.
-- Un navegador web moderno.
-
-> Los comandos definitivos de instalación se actualizarán cuando el código ejecutable esté incorporado al repositorio.
-
-## Instalación
-
-Actualmente el repositorio contiene la documentación base. La estructura prevista para el desarrollo es:
+## Estructura actual
 
 ```text
 Delivery-local/
-├── frontend/
-├── backend/
+├── DELIVERY_BACKEND/
+│   ├── src/
+│   │   ├── db.js
+│   │   └── index.js
+│   ├── .env.example
+│   └── package.json
 ├── database/
+│   ├── 01_schema.sql
+│   └── 02_datos_iniciales.sql
 ├── docs/
-│   ├── adr/
-│   ├── blockers.md
-│   ├── test-cases.md
-│   ├── technical-debt.md
-│   ├── architecture/
-│   └── images/
-├── README.md
-└── CONTRIBUTING.md
+├── frontend/
+└── README.md
 ```
 
-Cuando se agreguen los módulos ejecutables, esta sección contendrá comandos reproducibles de instalación, configuración de variables de entorno y carga de la base de datos.
+## 1. Preparar la base de datos
 
-## Decisiones arquitectónicas
+En MySQL Workbench:
 
-Las decisiones importantes se mantienen como ADRs para conservar memoria técnica del proyecto.
+1. Abre y ejecuta `database/01_schema.sql`.
+2. Abre y ejecuta `database/02_datos_iniciales.sql`.
 
-- [ADR-001: Arquitectura de tres capas](docs/adr/ADR-001-arquitectura-tres-capas.md)
-- [ADR-002: API REST entre frontend y backend](docs/adr/ADR-002-api-rest.md)
-- [ADR-003: MySQL como sistema gestor de base de datos](docs/adr/ADR-003-mysql.md)
+El segundo archivo registra los cinco negocios y sus 30 productos de ejemplo. Puede ejecutarse más de una vez sin duplicar esos registros.
 
-## Bloqueos del proyecto
+La base de datos se llama **cutlaquepaque_delivery**.
 
-Los bloqueos del equipo se encuentran registrados en un documento específico y también se muestran aquí para que sean fáciles de localizar.
+## 2. Configurar y ejecutar el backend
 
-- [BLQ-001: Infraestructura](docs/blockers.md#blq-001-infraestructura)
-- [BLQ-002: Conocimiento y experiencia en desarrollo](docs/blockers.md#blq-002-conocimiento-y-experiencia-en-desarrollo)
+Abre una terminal en la carpeta del proyecto y ejecuta:
 
-**[Consultar todos los bloqueos del proyecto](docs/blockers.md)**
-
-## Casos de prueba
-
-Los casos de prueba definidos para validar la integración técnica y el flujo de pedido están documentados en:
-
-- [CP-INT-001: Registro de pedido (integración)](docs/test-cases.md#cp-int-001--registro-de-pedido)
-- [CP-ACE-001: Realizar un pedido de comida (aceptación)](docs/test-cases.md#cp-ace-001--realizar-un-pedido-de-comida)
-
-**[Consultar casos de prueba y estado de ejecución](docs/test-cases.md)**
-
-> Los casos están documentados y pendientes de ejecución en la aplicación. Los datos de precio incluidos son ejemplos para las pruebas.
-
-## Deuda técnica
-
-Las deudas conocidas se registran y priorizan en:
-
-**[Balance de deuda técnica](docs/technical-debt.md)**
-
-La deuda no se considera un fallo oculto: se documenta con impacto, prioridad y una propuesta concreta de resolución.
-
-## Contribución
-
-El proyecto utiliza ramas de trabajo y Pull Requests para integrar cambios.
-
-Flujo recomendado:
-
-```text
-main
-  ↑
-Pull Request
-  ↑
-rama de trabajo
-  ↑
-commits atómicos
+```powershell
+cd DELIVERY_BACKEND
+Copy-Item .env.example .env
+npm install
 ```
 
-Consulta [CONTRIBUTING.md](CONTRIBUTING.md) para las convenciones de ramas, commits y Pull Requests.
+Edita `DELIVERY_BACKEND/.env` y coloca las credenciales reales de tu servidor MySQL. No subas ese archivo a GitHub; está excluido mediante `.gitignore`.
 
-## Estructura de documentación
+Inicia el backend:
 
-```text
-docs/
-├── adr/
-│   ├── ADR-001-arquitectura-tres-capas.md
-│   ├── ADR-002-api-rest.md
-│   └── ADR-003-mysql.md
-├── blockers.md
-├── test-cases.md
-├── technical-debt.md
-├── architecture/
-└── images/
+```powershell
+npm run dev
 ```
 
-## Autores
+El servidor utiliza el puerto **4000** por defecto.
 
-**Equipo del proyecto Delivery Local**
+## 3. Ejecutar el frontend
 
-Itzel Arleth Padilla Segura
+Abre una segunda terminal:
 
-Armando Rodrigo Hernandez Barba
+```powershell
+cd frontend
+npm install
+npm run dev
+```
 
-Cesar Medina Hernandez
+Vite utiliza el puerto **5173** y reenvía las solicitudes que comienzan con `/api` al backend en el puerto **4000**.
 
-Ramiro Preciado Martinez
+## 4. Rutas disponibles
 
-Daniel Alejandro Medina Mena
+| Método | Ruta | Función |
+|---|---|---|
+| GET | `/api/test-db` | Comprueba la conexión e informa la base utilizada |
+| GET | `/api/roles` | Consulta los roles permitidos en `usuarios.rol` |
+| GET | `/api/negocios` | Lista los negocios activos |
+| GET | `/api/productos` | Lista los productos disponibles |
+| GET | `/api/productos?id_negocio=1` | Filtra productos por negocio |
 
-Proyecto académico de Ingeniería en Informática — Universidad de Guadalajara, CUTlaquepaque.
+Con el frontend activo, estas rutas también pueden consultarse desde `http://localhost:5173/api/...`.
+
+## 5. Reglas importantes del modelo
+
+- Cada pedido pertenece a un usuario y a un solo negocio.
+- Los productos de un pedido deben pertenecer al mismo negocio del pedido.
+- El detalle conserva el negocio para validar esa relación mediante claves foráneas compuestas.
+- El frontend se comunica con MySQL únicamente a través del backend.
+
+## Estado
+
+La estructura SQL, los datos iniciales y las rutas básicas de consulta están preparados. El registro de usuarios, autenticación, carrito, creación de pedidos y paneles de gestión se implementarán por etapas.
