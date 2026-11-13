@@ -8,15 +8,22 @@ USE cutlaquepaque_delivery;
 START TRANSACTION;
 
 -- NEGOCIOS
+-- Se insertan solo si el nombre todavía no existe.
+-- Esto también evita duplicados en bases creadas con versiones anteriores del esquema.
 INSERT INTO negocios (nombre, descripcion, categoria, direccion)
-VALUES
-('Tamales Mary', 'Venta de tamales', 'Tamales', 'Alrededores del Cutlaquepaque'),
-('Tacos Beny', 'Venta de tacos', 'Tacos', 'Alrededores del Cutlaquepaque'),
-('Fonda de Lety', 'Comida casera y platillos del día', 'Comida corrida', 'Alrededores del Cutlaquepaque'),
-('Lonches Mario', 'Venta de lonches y tortas', 'Lonches', 'Alrededores del Cutlaquepaque'),
-('Aguas Frescas La Michoacana', 'Venta de aguas frescas y bebidas', 'Bebidas', 'Alrededores del Cutlaquepaque')
-ON DUPLICATE KEY UPDATE nombre = VALUES(nombre);
-
+SELECT catalogo.nombre, catalogo.descripcion, catalogo.categoria, catalogo.direccion
+FROM (
+    SELECT 'Tamales Mary' AS nombre, 'Venta de tamales' AS descripcion, 'Tamales' AS categoria, 'Alrededores del Cutlaquepaque' AS direccion
+    UNION ALL SELECT 'Tacos Beny', 'Venta de tacos', 'Tacos', 'Alrededores del Cutlaquepaque'
+    UNION ALL SELECT 'Fonda de Lety', 'Comida casera y platillos del día', 'Comida corrida', 'Alrededores del Cutlaquepaque'
+    UNION ALL SELECT 'Lonches Mario', 'Venta de lonches y tortas', 'Lonches', 'Alrededores del Cutlaquepaque'
+    UNION ALL SELECT 'Aguas Frescas La Michoacana', 'Venta de aguas frescas y bebidas', 'Bebidas', 'Alrededores del Cutlaquepaque'
+) AS catalogo
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM negocios n
+    WHERE n.nombre = catalogo.nombre
+);
 -- PRODUCTOS
 -- Los negocios se buscan por nombre; no se depende de que sus IDs sean 1 a 5.
 -- La combinación negocio + nombre evita insertar productos repetidos al reejecutar.
