@@ -9,7 +9,7 @@ Este documento reúne los casos de prueba definidos para validar la integración
 ## CP-INT-001 — Inicio de sesión
 
 > **Tipo:** Prueba de integración
-> **Proyecto:** Cutlaquepaque Delivery
+**Proyecto:** Cutlaquepaque Delivery
 
 **Objetivo**
 
@@ -30,10 +30,10 @@ Verificar que el frontend se comunique correctamente con la API REST y que el ba
 
 **Datos de prueba**
 
-Campo| Valor
-Correo electrónico| estudiante@cutlaquepaque.edu.mx
-Contraseña| Clave12345
-Usuario| Estudiante registrado
+Campo | Valor
+Correo electrónico | estudiante@cutlaquepaque.edu.mx
+Contraseña | Clave12345
+Usuario | Estudiante registrado
 
 **Procedimiento**
 
