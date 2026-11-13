@@ -24,7 +24,9 @@ Delivery-local/
 │   └── package.json
 ├── database/
 │   ├── 01_schema.sql
-│   └── 02_datos_iniciales.sql
+│   ├── 02_datos_iniciales.sql
+│   ├── 03_validar_migracion_pedidos.sql
+│   └── 04_migrar_integridad_pedidos.sql
 ├── docs/
 ├── frontend/
 └── README.md
@@ -32,14 +34,24 @@ Delivery-local/
 
 ## 1. Preparar la base de datos
 
-En MySQL Workbench:
+En MySQL Workbench, la base de datos se llama **cutlaquepaque_delivery**.
+
+**Instalación nueva:**
 
 1. Abre y ejecuta `database/01_schema.sql`.
 2. Abre y ejecuta `database/02_datos_iniciales.sql`.
 
 El segundo archivo registra los cinco negocios y sus 30 productos de ejemplo. Puede ejecutarse más de una vez sin duplicar esos registros.
 
-La base de datos se llama **cutlaquepaque_delivery**.
+**Si ya tenías creada la base con la versión anterior del esquema:**
+
+1. Ejecuta `database/03_validar_migracion_pedidos.sql`.
+2. Comprueba que `detalles_con_negocio_incorrecto` sea **0** y que la consulta de detalle no devuelva filas.
+3. Solo si la validación es correcta, ejecuta una vez `database/04_migrar_integridad_pedidos.sql`.
+
+No ejecutes el archivo 04 si la validación devuelve inconsistencias. Tampoco necesitas ejecutar la migración en una instalación nueva, porque el esquema actualizado ya incluye esas relaciones.
+
+Nota: `01_schema.sql` crea tablas si no existen; no altera automáticamente tablas que ya fueron creadas. Para bases anteriores se utiliza la migración indicada arriba.
 
 ## 2. Configurar y ejecutar el backend
 
