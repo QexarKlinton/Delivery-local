@@ -98,18 +98,15 @@ CREATE TABLE IF NOT EXISTS producto_variantes (
 
 CREATE TABLE IF NOT EXISTS puntos_entrega (
   id_punto_entrega INT AUTO_INCREMENT PRIMARY KEY,
-  id_negocio INT NOT NULL,
   nombre VARCHAR(180) NOT NULL,
-  ubicacion_referencia TEXT,
-  descripcion TEXT,
-  disponibilidad_texto TEXT,
-  datos_fuente TEXT NULL,
-  fila_excel INT NULL,
-  orden_fuente INT NOT NULL DEFAULT 1,
+  tipo VARCHAR(30) NOT NULL,
+  edificio VARCHAR(120) NOT NULL DEFAULT 'CUTlaquepaque',
+  referencia TEXT NULL,
+  descripcion TEXT NULL,
   activo BOOLEAN NOT NULL DEFAULT TRUE,
-  CONSTRAINT uq_punto_entrega_fuente UNIQUE (id_negocio,fila_excel,orden_fuente),
-  CONSTRAINT fk_puntos_entrega_negocio FOREIGN KEY (id_negocio)
-    REFERENCES negocios(id_negocio) ON UPDATE CASCADE ON DELETE CASCADE
+  orden INT NOT NULL,
+  CONSTRAINT uq_puntos_entrega_nombre UNIQUE (nombre),
+  CONSTRAINT uq_puntos_entrega_orden UNIQUE (orden)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS pedidos (
@@ -120,12 +117,15 @@ CREATE TABLE IF NOT EXISTS pedidos (
   total DECIMAL(10,2) NOT NULL DEFAULT 0.00,
   estado ENUM('pendiente','aceptado','preparando','listo','entregado','cancelado') NOT NULL DEFAULT 'pendiente',
   punto_entrega VARCHAR(200) NOT NULL,
+  id_punto_entrega INT NULL,
   observaciones TEXT,
   CONSTRAINT uq_pedidos_pedido_negocio UNIQUE (id_pedido,id_negocio),
   CONSTRAINT fk_pedidos_usuario FOREIGN KEY (id_usuario)
     REFERENCES usuarios(id_usuario) ON UPDATE CASCADE ON DELETE RESTRICT,
   CONSTRAINT fk_pedidos_negocio FOREIGN KEY (id_negocio)
     REFERENCES negocios(id_negocio) ON UPDATE CASCADE ON DELETE RESTRICT,
+  CONSTRAINT fk_pedidos_punto_entrega FOREIGN KEY (id_punto_entrega)
+    REFERENCES puntos_entrega(id_punto_entrega) ON UPDATE CASCADE ON DELETE SET NULL,
   CONSTRAINT chk_pedidos_total CHECK (total >= 0)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
