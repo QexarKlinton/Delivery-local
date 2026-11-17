@@ -1,5 +1,6 @@
 # ADR-002: Comunicación mediante API REST
 **Estado:** Aceptado
+
 **Fecha de registro:** 29 de octubre de 2026
 
 ## Contexto

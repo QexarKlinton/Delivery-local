@@ -1,6 +1,7 @@
 # ADR-003: MySQL como sistema gestor de base de datos
 
 **Estado:** Aceptado  
+
 **Fecha de registro:** 29 de octubre de 2026
 
 ## Contexto
@@ -13,8 +14,8 @@ Se utilizará MySQL como sistema gestor de base de datos relacional para la prim
 
 ## Alternativas consideradas
 
-- **PostgreSQL:** ofrece capacidades relacionales similares.
-- **MongoDB:** utiliza un modelo de documentos y una estructura diferente.
+- **PostgreSQL:** ofrece capacidades relacionales , pero se descarta porque el equipo tiene mayor familiaridad y rapidez de implementación con MySQL.
+- **MongoDB:** utiliza un modelo de documentos y una estructura ; se descarta porque los datos del sistema son relacionales y requieren integridad referencial estricta.
 ## Justificación 
 
 Se elige MySQL porque el alcance actual está orientado a un modelo relacional y sus necesidades previstas pueden cubrirse mediante tablas y consultas SQL.
